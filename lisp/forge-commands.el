@@ -1377,7 +1377,7 @@ upstream remote."
     val))
 
 (defun forge--scope (&optional key)
-  ;; `transient-scope' itself probably offer optional KEY.
+  ;; `transient-scope' itself should probably offer optional KEY.
   (let ((scope (transient-scope)))
     (if key (alist-get key scope) scope)))
 
