@@ -1268,7 +1268,7 @@ upstream remote."
         (propertize (forge--scope 'url) 'face 'bold)))
      :format "%d")]
 
-   ;; Nothing to tracked.
+   ;; Nothing to track.
    [:if-not (##forge--scope 'topdir)
     (:info*
      (lambda ()
