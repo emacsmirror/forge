@@ -448,7 +448,7 @@ forges and hosts."
           (forge-get-repository (list (match-string 3 choice)
                                       (match-string 1 choice)
                                       (match-string 2 choice))
-                                :known?)
+                                nil :known?)
         (error "BUG")))))
 
 (defun forge-read-host (prompt &optional class)
