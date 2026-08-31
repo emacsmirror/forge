@@ -451,6 +451,10 @@ forges and hosts."
                                 nil :known?)
         (error "BUG")))))
 
+(defun forge-select-repository (prompt &optional demand)
+  (or (forge-get-repository (or demand :known?))
+      (forge-read-repository prompt)))
+
 (defun forge-read-host (prompt &optional class)
   (magit-completing-read
    prompt

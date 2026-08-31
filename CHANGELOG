@@ -10,6 +10,10 @@
   topics of a repository, for which previously only a subset of topics
   was fetched.
 
+- When invoked outside a Git repository, ~forge-list-topics~,
+  ~forge-list-discussions~, ~forge-list-issues~ and ~forge-list-pullreqs~
+  now prompt for a repository.  #827
+
 * v0.6.8    2026-08-01
 
 - ~forge--pullreq-range~ no longer returns an empty range for a
