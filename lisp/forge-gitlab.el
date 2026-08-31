@@ -119,7 +119,7 @@
 ;;;; Topics
 
 (cl-defmethod forge--pull-topic ((repo forge-gitlab-repository) _topic
-                                 &key callback _errorback)
+                                 &optional callback)
   (forge--pull repo callback)) ; TODO Pull only the one topic.
 
 ;;;; Issues

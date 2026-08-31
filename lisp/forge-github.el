@@ -352,7 +352,8 @@
 ;;;; Topics
 
 (cl-defmethod forge--pull-topic ((repo forge-github-repository)
-                                 (number number))
+                                 (number number)
+                                 &optional callback)
   (forge--query repo
     `(query
       [($owner String!)
@@ -380,7 +381,9 @@
                          (forge--update-issue repo data))
                         ((setq data .repository.pullRequest)
                          (forge--update-pullreq repo data))))
-                (forge-refresh-buffer))))
+                (if callback
+                    (funcall callback)
+                  (forge-refresh-buffer)))))
 
 (cl-defmethod forge--pull-topic ((repo forge-github-repository)
                                  (topic forge-discussion))

@@ -220,7 +220,7 @@ repository cannot be determined, instead invoke `forge-add-repository'."
   (let ((topic (forge-current-topic t)))
     (forge--pull-topic (forge-get-repository topic) topic)))
 
-(cl-defmethod forge--pull-topic ((repo forge-repository) _topic)
+(cl-defmethod forge--pull-topic ((repo forge-repository) _topic &optional _cb)
   (error "Fetching an individual topic not implemented for %s"
          (eieio-object-class repo)))
 
