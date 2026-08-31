@@ -438,7 +438,7 @@ forges and hosts."
                          (forge-sql [:select [githost owner name]
                                      :from repository]))
                  nil t nil nil
-                 (and$ (forge-get-repository :stub?)
+                 (and$ (forge-get-repository :known?)
                        (format "%s/%s @%s"
                                (oref $ owner)
                                (oref $ name)
@@ -447,7 +447,8 @@ forges and hosts."
       (if (string-match "\\`\\(.+\\)/\\([^/]+\\) @\\(.+\\)\\'" choice)
           (forge-get-repository (list (match-string 3 choice)
                                       (match-string 1 choice)
-                                      (match-string 2 choice)))
+                                      (match-string 2 choice))
+                                :known?)
         (error "BUG")))))
 
 (defun forge-read-host (prompt &optional class)
