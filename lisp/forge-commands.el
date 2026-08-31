@@ -556,15 +556,16 @@ lifts the limitation to active pull-requests."
 (defun forge-visit-topic-from-url (url)
   "Visit the topic specified by web URL."
   (interactive (list (read-string "Topic URL: ")))
-  (if (string-match
-       "/\\(issues\\|pull\\|discussions\\|merge_requests\\)/\\([0-9]+\\)\\'"
-       url)
-      (forge-topic-setup-buffer
-       (forge-get-topic (forge-get-repository
-                         (substring url 0 (match-beginning 1))
-                         nil :tracked)
-                        (string-to-number (match-string 2 url))))
-    (user-error "Not recognized as a topic URL: %s" url)))
+  (cond-let*
+    ((not (string-match "\
+/\\(issues\\|pull\\|discussions\\|merge_requests\\)/\\([0-9]+\\)\\'" url))
+     (user-error "Not recognized as a topic URL: %s" url))
+    [[number (string-to-number (match-string 2 url))]
+     [repo-url (substring url 0 (match-beginning 1))]
+     [repo (forge-get-repository repo-url nil :tracked?)]]
+    (repo
+     (forge-topic-setup-buffer (forge-get-topic repo number)))
+    ((user-error "Cannot visit %s; repository untracked" url))))
 
 ;;;###autoload
 (defun forge-visit-this-topic (&optional menu)
