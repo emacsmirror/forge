@@ -234,10 +234,9 @@
             (forge--update-revnotes    repo .commitComments))
           (oset repo condition :tracked))
         (forge--msg repo t t   "Storing REPO")
-        (cond
-          ((oref repo selective-p))
-          (callback (funcall callback))
-          ((forge--maybe-git-fetch repo buf))))
+        (cond (callback (funcall callback))
+              ((oref repo selective-p))
+              ((forge--maybe-git-fetch repo buf))))
       :narrow '(repository)
       :until
       ;; Keys have the form `FIELD-until', where FIELD is the name of a
