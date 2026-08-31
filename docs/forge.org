@@ -1694,6 +1694,36 @@ This section lists some frequently asked questions.  Please see also
 https://github.com/magit/forge/wiki/FAQ for an extended list of common
 issues.
 
+** Forge repositories in database vs. Git repositories
+
+Forge differs from Emacs packages like Magit and ~project~, in that its
+first-class objects are remote repositories, not local file system
+paths.  Forge "knows" about a set of remote repositories, which can
+be listed with ~M-x forge-list-repositories~.  Forge adds a remote
+repository to its known/tracked set upon explicit request, typically
+~N f f~ from Magit.
+
+A repository may be optionally associated with a local git worktree,
+but this is not exclusive.  It is possible to use the same forge
+repository with multiple worktrees.  The last used worktree will be
+remembered as the associated one.
+
+Mapping from ~default-directory~ to a Forge repository is supported,
+according to fixed rules (see [[*How Forge Detection Works]]).  In short,
+if there is only one remote Forge uses that; otherwise it tries the
+value of ~forge.remote~, then a remote named ~upstream~, if that exists,
+and finally a remote named ~origin~, if that exists.
+
+Forge stores its state in a central database (~forge-database-file~).
+The database is largely cache-like, but not entirely.  At least the
+following information cannot be re-fetched if the database is deleted:
+
+- Choice of repositories, individual topics (in selective workflow)
+- Choice of selective mode, or not having fetched topics before some date
+- Associated worktree path
+- Private per-topic status (unread, pending, done), topic marks (and
+  mark definitions), notes
+
 ** ~error in process filter: HTTP Error: 502, "Bad gateway"~
 
 This is a frequently occurring error.  Adding some formatting, the
