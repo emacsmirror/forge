@@ -994,9 +994,9 @@ argument, i.e., @code{C-u RET}.
 @item @kbd{@key{RET} [on topic]} (@code{forge-visit-this-topic})
 @kindex RET [on topic]
 @findex forge-visit-this-topic
-This commands visits the topic at point in a separate buffer.
-When invoked with a prefix argument then it not only visits the
-topic in a separate buffer, it at the same time displays
+This commands visits the topic at point in a separate buffer.  When
+invoked with a prefix argument then it not only visits the topic in
+a separate buffer, it at the same time displays the topic menu.
 
 @item @kbd{N v t} (@code{forge-visit-topic})
 @itemx @kbd{N v i} (@code{forge-visit-issue})

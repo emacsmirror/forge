@@ -876,9 +876,9 @@ argument, i.e., ~C-u RET~.
 
 - Key: RET [on topic] (forge-visit-this-topic) ::
 
-  This commands visits the topic at point in a separate buffer.
-  When invoked with a prefix argument then it not only visits the
-  topic in a separate buffer, it at the same time displays
+  This commands visits the topic at point in a separate buffer.  When
+  invoked with a prefix argument then it not only visits the topic in
+  a separate buffer, it at the same time displays the topic menu.
 
 - Key: N v t (forge-visit-topic) ::
 - Key: N v i (forge-visit-issue) ::
