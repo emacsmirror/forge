@@ -1254,7 +1254,7 @@ upstream remote."
 ;;; Add repositories
 
 ;;;###autoload(autoload 'forge-add-repository "forge-commands" nil t)
-(transient-define-prefix forge-add-repository (&optional repo limit)
+(transient-define-prefix forge-add-repository (&optional repo limit callback)
   "Add a repository to the database."
   :refresh-suffixes t
   [:class transient-subgroups
@@ -1357,7 +1357,7 @@ upstream remote."
        (oset repo selective-p t)
        (setq limit nil))
      (forge--pull repo
-                  (and (not (forge-get-worktree repo)) #'ignore)
+                  (or callback (and (not (forge-get-worktree repo)) #'ignore))
                   limit))))
 
 (defun forge-add-repository--scope (&optional directory)
