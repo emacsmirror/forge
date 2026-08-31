@@ -89,7 +89,7 @@
                    (forge--update-pullreqs   repo .pullreqs)
                    (oset repo condition :tracked)))
                (forge--msg repo t t "Storing REPO")
-               (cond (callback (funcall callback))
+               (cond (callback (funcall callback repo))
                      ((oref repo selective-p))
                      ((forge--maybe-git-fetch repo buffer)))))))))
 

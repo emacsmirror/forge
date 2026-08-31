@@ -234,7 +234,7 @@
             (forge--update-revnotes    repo .commitComments))
           (oset repo condition :tracked))
         (forge--msg repo t t   "Storing REPO")
-        (cond (callback (funcall callback))
+        (cond (callback (funcall callback repo))
               ((oref repo selective-p))
               ((forge--maybe-git-fetch repo buf))))
       :narrow '(repository)
@@ -850,9 +850,9 @@
                                 (list repo))))
                        names))
         (cb nil))
-    (setq cb (lambda ()
-               (when-let ((repo (pop repos)))
-                 (forge--pull repo cb))))
+    (setq cb (lambda (_)
+               (when-let ((next (pop repos)))
+                 (forge--pull next cb))))
     (funcall cb)))
 
 ;;; Mutations
