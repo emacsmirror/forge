@@ -1,4 +1,11 @@
 # -*- mode: org -*-
+* v0.6.9    UNRELEASED
+
+- ~forge-visit-topic-from-url~ learned to first fetch the requested
+  topic, if it isn't in the local database yet.  If the repository
+  isn't in the local database yet, that is added without fetching
+  all topics.  #868
+
 * v0.6.8    2026-08-01
 
 - ~forge--pullreq-range~ no longer returns an empty range for a

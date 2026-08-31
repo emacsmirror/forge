@@ -563,9 +563,22 @@ lifts the limitation to active pull-requests."
     [[number (string-to-number (match-string 2 url))]
      [repo-url (substring url 0 (match-beginning 1))]
      [repo (forge-get-repository repo-url nil :tracked?)]]
+    ([_ repo]
+     [topic (forge-get-topic repo number)]
+     (forge-topic-setup-buffer topic))
     (repo
-     (forge-topic-setup-buffer (forge-get-topic repo number)))
-    ((user-error "Cannot visit %s; repository untracked" url))))
+     (forge--pull-topic
+      repo number
+      (lambda ()
+        (forge-topic-setup-buffer (forge-get-topic repo number)))))
+    ([repo (forge-get-repository repo-url nil :stub)]
+     (forge-add-repository
+      repo :selective
+      (lambda (repo)
+        (forge--pull-topic
+         repo number
+         (lambda ()
+           (forge-topic-setup-buffer (forge-get-topic repo number)))))))))
 
 ;;;###autoload
 (defun forge-visit-this-topic (&optional menu)
