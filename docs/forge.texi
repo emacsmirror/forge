@@ -680,7 +680,8 @@ Note that it is possible to add a repository to the local database,
 without pulling all the data, which is useful if you just want to
 create a single issue or pull-request in a repository, but are not
 interested in existing topics, e.g., because you do not regularly
-contribute to that repository.
+contribute to that repository.  You can later switch to fetching
+all topics, using @code{forge-complete-repository}.
 
 Also note that you can add a repository to the local database, even
 if no local Git clone exists.
@@ -701,6 +702,13 @@ information in the database.
 
 If the current repository isn't being tracked in the local database
 yet, then this command pivots to behave like @code{forge-add-repository}.
+
+@item @kbd{N m c} (@code{forge-complete-repository})
+@kindex N m c
+@findex forge-complete-repository
+Start fetching all topics of REPOSITORY, instead of either only the
+topics that were created after a certain date or only the topics that
+you have previously fetched individually.
 @end table
 
 Forge adds two additional sections to Magit's status buffer, which
@@ -1018,6 +1026,11 @@ Normally users would yank that URL into the minibuffer, after
 having copied it from an email or a browser's address bar.
 
 This command is disabled in the menu by default.
+
+If the repository, which the topic belongs to, isn't being tracked
+in the local database, then it is added automatically, but without
+fetching all topics.  You can later start fetching all topics using
+the command @code{forge-complete-repository}.
 
 @item @kbd{C-c C-o} (@code{forge-browse})
 @itemx @kbd{o [on topic in topic list]} (@code{forge-browse-this-topic})

@@ -129,7 +129,8 @@ Takes the pull-request as only argument and must return a directory."
    ["Configure"
     ("R  " forge-add-pullreq-refspec)
     ("s r" forge-forge.remote)
-    ("s l" forge-forge.graphqlItemLimit)]])
+    ("s l" forge-forge.graphqlItemLimit)
+    ("s a" forge-complete-repository)]])
 
 (transient-augment-suffix forge-configure
   :transient #'transient--do-replace
@@ -1218,6 +1219,24 @@ Also update the upstream branches of local branches accordingly."
   :variable "forge.graphqlItemLimit"
   :reader #'read-string
   :default (##number-to-string ghub-graphql-items-per-request))
+
+(transient-define-suffix forge-complete-repository (repository)
+  "No longer fetch REPOSITORY's topics only selectively.
+Start fetching all topics of REPOSITORY, instead of either only the
+topics that were created after a certain date or only the topics that
+you have previously fetched individually."
+  :description (lambda ()
+                 (if (forge--repo-selective-p)
+                     "Start fetching all topics"
+                   "Already fetching all topics"))
+  :inapt-if-not #'forge--repo-selective-p
+  (interactive (list (forge-read-repository "Remove repository from db")))
+  (when (or (forge--repo-selective-p repository)
+            (yes-or-no-p
+             (format "It appears we already fetch all topics for %s; %s"
+                     (oref repository slug) "(re-)fetch all topics?")))
+    (oset repository selective-p nil)
+    (forge--pull repository)))
 
 (transient-define-suffix forge-toggle-display-in-status-buffer ()
   "Toggle whether to display topics in the current status buffer."

@@ -480,6 +480,17 @@ forges and hosts."
        (?p . ,path)
        (?P . ,(string-replace "/" "%2F" path))))))
 
+(defun forge--repo-selective-p (&optional repo)
+  (and-let ((repo (or repo (forge-get-repository :tracked))))
+    (or (oref repo selective-p)
+        ;; We do not record whether the initial pull only fetched topics
+        ;; created after a certain date, so we have to use a heuristic.
+        ;; Topics can be deleted, so any of the first three topics will
+        ;; have to do.
+        (not (or (forge-get-topic repo 1)
+                 (forge-get-topic repo 2)
+                 (forge-get-topic repo 3))))))
+
 (defvar forge--mode-line-buffer nil)
 
 (defun forge--msg (repo echo done format &rest args)
