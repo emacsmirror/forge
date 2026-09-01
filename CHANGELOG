@@ -1,5 +1,5 @@
 # -*- mode: org -*-
-* v0.6.9    UNRELEASED
+* v0.6.9    2026-09-01
 
 - ~forge-visit-topic-from-url~ learned to first fetch the requested
   topic, if it isn't in the local database yet.  If the repository
