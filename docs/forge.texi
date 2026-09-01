@@ -12,10 +12,10 @@ Copyright (C) 2018-2026 Jonas Bernoulli <emacs.forge@@jonas.bernoulli.dev>
 
 You can redistribute this document and/or modify it under the terms
 of the GNU General Public License as published by the Free Software
-Foundation@comma{} either version 3 of the License@comma{} or (at your option) any
+Foundation, either version 3 of the License, or (at your option) any
 later version.
 
-This document is distributed in the hope that it will be useful@comma{}
+This document is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE@.  See the GNU
 General Public License for more details.
@@ -44,7 +44,7 @@ General Public License for more details.
 @node Top
 @top Forge User and Developer Manual
 
-Forge allows you to work with Git forges@comma{} currently Github and Gitlab@comma{}
+Forge allows you to work with Git forges, currently Github and Gitlab,
 from the comfort of Magit and Emacs.
 
 @noindent
@@ -93,7 +93,7 @@ Supported Forges and Hosts
 FAQ
 
 * Forge repositories in database vs. Git repositories: Forge repositories in database vs Git repositories. 
-* @code{error in process filter HTTP Error 502@comma{} "Bad gateway"}: @code{error in process filter HTTP Error 502 "Bad gateway"}. 
+* @code{error in process filter HTTP Error 502, "Bad gateway"}: @code{error in process filter HTTP Error 502 "Bad gateway"}. 
 
 @end detailmenu
 @end menu
@@ -101,10 +101,10 @@ FAQ
 @node Introduction
 @chapter Introduction
 
-Forge allows you to work with Git forges@comma{} currently Github and Gitlab@comma{}
+Forge allows you to work with Git forges, currently Github and Gitlab,
 from the comfort of Magit and Emacs.
 
-Forge fetches issues@comma{} pull-requests and other data using the forge's
+Forge fetches issues, pull-requests and other data using the forge's
 API and stores the retrieved information in a local database.
 Additionally it fetches pull-request references using Git.
 
@@ -113,9 +113,9 @@ Additionally it fetches pull-request references using Git.
 
 Please first do the common setup below and then carefully follow the
 instructions for your forge instance.  Once you have completed the
-setup@comma{} you can start tracking repositories (see @ref{Initial Pull}).
+setup, you can start tracking repositories (see @ref{Initial Pull}).
 
-If you run into difficulties during setup or the initial pull@comma{} then
+If you run into difficulties during setup or the initial pull, then
 please also see @ref{How Forge Detection Works} and @ref{Getting Started,,,ghub,}.
 
 @menu
@@ -145,10 +145,10 @@ Or if you use @code{use-package}:
   :after magit)
 @end lisp
 
-By default Forge adds some bindings to Magit keymaps and menus@comma{} and
-some sections to Magit buffers.  If you would like to prevent that@comma{}
+By default Forge adds some bindings to Magit keymaps and menus, and
+some sections to Magit buffers.  If you would like to prevent that,
 you have to set @code{forge-add-default-bindings} and/or
-@code{forge-add-default-sections} to @code{nil}@comma{} before @code{magit} (not just @code{forge}) is
+@code{forge-add-default-sections} to @code{nil}, before @code{magit} (not just @code{forge}) is
 loaded.
 
 @node Setup for Githubcom
@@ -163,7 +163,7 @@ First inform Forge about your @uref{https://github.com} username:
 git config --global github.user USERNAME
 @end example
 
-If you need to identify as another user in a particular repository@comma{}
+If you need to identify as another user in a particular repository,
 then you have to set that variable locally:
 
 @example
@@ -175,17 +175,17 @@ git config --local github.user USERNAME
 @subheading Create and Store an Access Token
 
 Visit @uref{https://github.com/settings/tokens} in a browser to generate
-a new "classic" token using the @code{repo}@comma{} @code{user} and @code{read:org} scopes.
-Do not close the browser window just yet@comma{} because the token will
+a new "classic" token using the @code{repo}, @code{user} and @code{read:org} scopes.
+Do not close the browser window just yet, because the token will
 only be shown once.
 
 The built-in Auth-Source (@ref{Top,,,auth,}) package is used to store the
 token generated in the previous step.  The @code{auth-sources} variable
 controls how and where Auth-Source keeps its secrets.  The default
 value is a list of three files: @code{("~/.authinfo" "~/.authinfo.gpg"
-"~/.netrc")}@comma{} but that can lead to confusing behavior@comma{} so you should
-make sure that only one of these files exists@comma{} and then you should
-also adjust the value of the variable to only ever use that file@comma{}
+"~/.netrc")}, but that can lead to confusing behavior, so you should
+make sure that only one of these files exists, and then you should
+also adjust the value of the variable to only ever use that file,
 for example:
 
 @lisp
@@ -193,14 +193,14 @@ for example:
 @end lisp
 
 In @code{~/.authinfo} secrets are stored in plain text.  If you don't want
-that@comma{} then you should use the encrypted @code{~/.authinfo.gpg} instead:
+that, then you should use the encrypted @code{~/.authinfo.gpg} instead:
 
 @lisp
 (setq auth-sources '("~/.authinfo.gpg"))
 @end lisp
 
 Make sure you put one of these forms in your init file @strong{and} to evaluate
-it in the current Emacs instance as well@comma{} by placing the cursor after
+it in the current Emacs instance as well, by placing the cursor after
 the final closing parenthesis and typing @code{C-x C-e} (@code{eval-last-sexp}).
 
 Next add a line like the following to the chosen file:
@@ -216,7 +216,7 @@ won't work.
 
 @item
 USERNAME must be the same as the value used for the @code{github.user} Git
-variable above.  You @strong{must} append @code{^forge} to that@comma{} without any space
+variable above.  You @strong{must} append @code{^forge} to that, without any space
 in between.
 
 @item
@@ -224,26 +224,26 @@ TOKEN is the token you generated earlier.
 @end itemize
 
 Finish by typing @code{M-x auth-source-forget-all-cached RET}.  If you don't
-do this@comma{} then Auth-Source may fail to look up the token.
+do this, then Auth-Source may fail to look up the token.
 
 @node Setup for Another Github Instance
 @section Setup for Another Github Instance
 
-Before you setup a Github instance that is not @uref{https://github.com}@comma{}
+Before you setup a Github instance that is not @uref{https://github.com},
 please first setup the latter.  The setup for @uref{https://github.com} is
-easier@comma{} and if that works but the setup for the other Github instance
-fails@comma{} then we can tentatively narrow the issue down to the parts that
+easier, and if that works but the setup for the other Github instance
+fails, then we can tentatively narrow the issue down to the parts that
 differ between @uref{https://github.com} and other instances.
 
 @anchor{Tell Forge about the Instance}
 @subheading Tell Forge about the Instance
 
-While Forge knows about @uref{https://github.com}@comma{} it does not know about
+While Forge knows about @uref{https://github.com}, it does not know about
 your other Github instances.  Forge instances are configured using
 the option @code{forge-alist} (also see its docstring).  The entry for
 @uref{https://github.com} in that variable looks like this:
 
-While Forge knows about @uref{https://github.com} out of the box@comma{} for all
+While Forge knows about @uref{https://github.com} out of the box, for all
 other instances you have to add a new entry to option @code{forge-alist}.
 
 The entry for @uref{https://github.com} looks like this:
@@ -255,8 +255,8 @@ The entry for @uref{https://github.com} looks like this:
   forge-github-repository)          ; CLASS
 @end lisp
 
-You have to add an entry for your instance.  For example@comma{} assuming
-your company uses @uref{https://example.com}@comma{} this might be correct:
+You have to add an entry for your instance.  For example, assuming
+your company uses @uref{https://example.com}, this might be correct:
 
 @lisp
 (push '("example.com"               ; GITHOST
@@ -267,13 +267,13 @@ your company uses @uref{https://example.com}@comma{} this might be correct:
 @end lisp
 
 Your company may use hostnames that follow a different format.  You
-should be able to easily determine and verify GITHOST and WEBHOST@comma{}
+should be able to easily determine and verify GITHOST and WEBHOST,
 but determining APIHOST is more difficult; you might have to ask a
-coworker.  APIHOST could be something like @code{api.example.com}@comma{} but it
+coworker.  APIHOST could be something like @code{api.example.com}, but it
 could also be something like @code{example.com/api}.
 
 If the REST API's end point is @code{/v3} and the GraphQL API's end point is
-@code{/graphql}@comma{} then use something like @code{example.com/v3} as APIHOST@.  This is
+@code{/graphql}, then use something like @code{example.com/v3} as APIHOST@.  This is
 a historic accident.  See @uref{https://github.com/magit/forge/issues/174}.
 
 We will use INSTANCE-ID (aka WEBHOST) and APIHOST below.
@@ -296,19 +296,19 @@ git config --global github.example.com.user tarsius
 @anchor{Create and Store an Access Token (1)}
 @subheading Create and Store an Access Token
 
-Visit your forge in a browser.  Follow a link to "Settings"@comma{} from
-there to "Developer settings"@comma{} from there to "Personal access tokens"@comma{}
+Visit your forge in a browser.  Follow a link to "Settings", from
+there to "Developer settings", from there to "Personal access tokens",
 and finally to "Tokens (classic)".  On that page generate a new token
-using the @code{repo}@comma{} @code{user} and @code{read:org} scopes.  Do not close the browser
-window just yet@comma{} because the token will only be shown once.
+using the @code{repo}, @code{user} and @code{read:org} scopes.  Do not close the browser
+window just yet, because the token will only be shown once.
 
 The built-in Auth-Source (@ref{Top,,,auth,}) package is used to store the
 token generated in the previous step.  The @code{auth-sources} variable
 controls how and where Auth-Source keeps its secrets.  The default
 value is a list of three files: @code{("~/.authinfo" "~/.authinfo.gpg"
-"~/.netrc")}@comma{} but that can lead to confusing behavior@comma{} so you should
-make sure that only one of these files exists@comma{} and then you should
-also adjust the value of the variable to only ever use that file@comma{}
+"~/.netrc")}, but that can lead to confusing behavior, so you should
+make sure that only one of these files exists, and then you should
+also adjust the value of the variable to only ever use that file,
 for example:
 
 @lisp
@@ -316,14 +316,14 @@ for example:
 @end lisp
 
 In @code{~/.authinfo} secrets are stored in plain text.  If you don't want
-that@comma{} then you should use the encrypted @code{~/.authinfo.gpg} instead:
+that, then you should use the encrypted @code{~/.authinfo.gpg} instead:
 
 @lisp
 (setq auth-sources '("~/.authinfo.gpg"))
 @end lisp
 
 Make sure you put one of these forms in your init file @strong{and} to evaluate
-it in the current Emacs instance as well@comma{} by placing the cursor after
+it in the current Emacs instance as well, by placing the cursor after
 the final closing parenthesis and typing @code{C-x C-e} (@code{eval-last-sexp}).
 
 Next add a line like the following to the chosen file:
@@ -340,7 +340,7 @@ Do @strong{not} instead use GITHOST or INSTANCE-ID (aka WEBHOST).
 
 @item
 USERNAME must be the same username you used above as the value of
-the Git variable.  You @strong{must} append @code{^forge} to that@comma{} without any space
+the Git variable.  You @strong{must} append @code{^forge} to that, without any space
 in between.
 
 @item
@@ -348,7 +348,7 @@ TOKEN is the token you generated earlier.
 @end itemize
 
 Finish by typing @code{M-x auth-source-forget-all-cached RET}.  If you don't
-do this@comma{} then Auth-Source may fail to look up the token.
+do this, then Auth-Source may fail to look up the token.
 
 @node Setup for Gitlabcom
 @section Setup for Gitlab.com
@@ -362,7 +362,7 @@ First inform Forge about your @uref{https://gitlab.com} username:
 git config --global gitlab.user USERNAME
 @end example
 
-If you need to identify as another user in a particular repository@comma{}
+If you need to identify as another user in a particular repository,
 then you have to set that variable locally:
 
 @example
@@ -374,17 +374,17 @@ git config --local gitlab.user USERNAME
 @subheading Create and Store an Access Token
 
 Visit @uref{https://gitlab.com/-/user_settings/personal_access_tokens} in a
-browser to generate a new token using the @code{api}@comma{} @code{read_api} and @code{read_user}
-scopes.  Do not close the browser window just yet@comma{} because the token
+browser to generate a new token using the @code{api}, @code{read_api} and @code{read_user}
+scopes.  Do not close the browser window just yet, because the token
 will only be shown once.
 
 The built-in Auth-Source (@ref{Top,,,auth,}) package is used to store the
 token generated in the previous step.  The @code{auth-sources} variable
 controls how and where Auth-Source keeps its secrets.  The default
 value is a list of three files: @code{("~/.authinfo" "~/.authinfo.gpg"
-"~/.netrc")}@comma{} but that can lead to confusing behavior@comma{} so you should
-make sure that only one of these files exists@comma{} and then you should
-also adjust the value of the variable to only ever use that file@comma{}
+"~/.netrc")}, but that can lead to confusing behavior, so you should
+make sure that only one of these files exists, and then you should
+also adjust the value of the variable to only ever use that file,
 for example:
 
 @lisp
@@ -392,14 +392,14 @@ for example:
 @end lisp
 
 In @code{~/.authinfo} secrets are stored in plain text.  If you don't want
-that@comma{} then you should use the encrypted @code{~/.authinfo.gpg} instead:
+that, then you should use the encrypted @code{~/.authinfo.gpg} instead:
 
 @lisp
 (setq auth-sources '("~/.authinfo.gpg"))
 @end lisp
 
 Make sure you put one of these forms in your init file @strong{and} to evaluate
-it in the current Emacs instance as well@comma{} by placing the cursor after
+it in the current Emacs instance as well, by placing the cursor after
 the final closing parenthesis and typing @code{C-x C-e} (@code{eval-last-sexp}).
 
 Next add a line like the following to the chosen file:
@@ -414,12 +414,12 @@ The value of @code{machine} should be @code{gitlab.com}.  For historic reasons
 @code{gitlab.com} is also supported.
 
 @item
-Note that if you instead use the @code{auth-source-pass} backend@comma{} then you
+Note that if you instead use the @code{auth-source-pass} backend, then you
 @strong{must} use @code{gitlab.com} as @code{host}.
 
 @item
 USERNAME must be the same as the value used for the @code{gitlab.user} Git
-variable above.  You @strong{must} append @code{^forge} to that@comma{} without any space
+variable above.  You @strong{must} append @code{^forge} to that, without any space
 in between.
 
 @item
@@ -427,22 +427,22 @@ TOKEN is the token you generated earlier.
 @end itemize
 
 Finish by typing @code{M-x auth-source-forget-all-cached RET}.  If you don't
-do this@comma{} then Auth-Source may fail to look up the token.
+do this, then Auth-Source may fail to look up the token.
 
 @node Setup for Another Gitlab Instance
 @section Setup for Another Gitlab Instance
 
-Before you setup a Gitlab instance that is not @uref{https://gitlab.com}@comma{}
+Before you setup a Gitlab instance that is not @uref{https://gitlab.com},
 please first setup the latter.  The setup for @uref{https://gitlab.com} is
-easier@comma{} and if that works but the setup for the other Gitlab instance
-fails@comma{} then we can tentatively narrow the issue down to the parts that
+easier, and if that works but the setup for the other Gitlab instance
+fails, then we can tentatively narrow the issue down to the parts that
 differ between @uref{https://gitlab.com} and other instances.
 
 @anchor{Tell Forge about the Instance (1)}
 @subheading Tell Forge about the Instance
 
 While Forge knows about @uref{https://gitlab.com} (and a few other well-known
-instances) out of the box@comma{} for other instances you have to add a new
+instances) out of the box, for other instances you have to add a new
 entry to option @code{forge-alist}.
 
 The entry for @uref{https://gitlab.com} looks like this:
@@ -454,11 +454,11 @@ The entry for @uref{https://gitlab.com} looks like this:
  forge-gitlab-repository)           ; CLASS
 @end lisp
 
-For historic reasons@comma{} APIHOST actually has to be a host followed by
+For historic reasons, APIHOST actually has to be a host followed by
 a path.
 
-You have to add an entry for your instance.  For example@comma{} assuming
-your company/organisation uses @uref{https://example.com}@comma{} this might be
+You have to add an entry for your instance.  For example, assuming
+your company/organisation uses @uref{https://example.com}, this might be
 correct:
 
 @lisp
@@ -470,7 +470,7 @@ correct:
 @end lisp
 
 Your company may use hostnames that follow a different format.  You
-should be able to easily determine and verify GITHOST and WEBHOST@comma{}
+should be able to easily determine and verify GITHOST and WEBHOST,
 but determining APIHOST is more difficult; you might have to ask a
 colleague.
 
@@ -496,17 +496,17 @@ git config --global gitlab.example.com.user tarsius
 
 Visit your forge in a browser.  Follow a link to "Preferences" and
 from there to "Access Tokens".  On that page generate a new "Personal
-access token" using the @code{api}@comma{} @code{read_api} and @code{read_user} scopes.  Do not
-close the browser window just yet@comma{} because the token will only be
+access token" using the @code{api}, @code{read_api} and @code{read_user} scopes.  Do not
+close the browser window just yet, because the token will only be
 shown once.
 
 The built-in Auth-Source (@ref{Top,,,auth,}) package is used to store the
 token generated in the previous step.  The @code{auth-sources} variable
 controls how and where Auth-Source keeps its secrets.  The default
 value is a list of three files: @code{("~/.authinfo" "~/.authinfo.gpg"
-"~/.netrc")}@comma{} but that can lead to confusing behavior@comma{} so you should
-make sure that only one of these files exists@comma{} and then you should
-also adjust the value of the variable to only ever use that file@comma{}
+"~/.netrc")}, but that can lead to confusing behavior, so you should
+make sure that only one of these files exists, and then you should
+also adjust the value of the variable to only ever use that file,
 for example:
 
 @lisp
@@ -514,14 +514,14 @@ for example:
 @end lisp
 
 In @code{~/.authinfo} secrets are stored in plain text.  If you don't want
-that@comma{} then you should use the encrypted @code{~/.authinfo.gpg} instead:
+that, then you should use the encrypted @code{~/.authinfo.gpg} instead:
 
 @lisp
 (setq auth-sources '("~/.authinfo.gpg"))
 @end lisp
 
 Make sure you put one of these forms in your init file @strong{and} to evaluate
-it in the current Emacs instance as well@comma{} by placing the cursor after
+it in the current Emacs instance as well, by placing the cursor after
 the final closing parenthesis and typing @code{C-x C-e} (@code{eval-last-sexp}).
 
 Next add a line like the following to the chosen file:
@@ -533,23 +533,23 @@ machine APIHOST login USERNAME^forge password TOKEN
 @itemize
 @item
 APIHOST must be either the same as the second element of the entry
-we added to @code{forge-alist}@comma{} or that element with the path suffix
-removed.  For example@comma{} if the APIHOST@comma{} specified in an @code{forge-alist}
-entry@comma{} is @code{example.com/api/v4}@comma{} then you can use @code{example.com/api/v4} or
+we added to @code{forge-alist}, or that element with the path suffix
+removed.  For example, if the APIHOST, specified in an @code{forge-alist}
+entry, is @code{example.com/api/v4}, then you can use @code{example.com/api/v4} or
 @code{example.com}.
 
-Historically only the former was supported@comma{} but that was a design
-mistake@comma{} which we are now stuck with@comma{} and using just @code{example.com} as
-APIHOST in @code{~/.authsource} is now recommended.  For the time being@comma{} in
+Historically only the former was supported, but that was a design
+mistake, which we are now stuck with, and using just @code{example.com} as
+APIHOST in @code{~/.authsource} is now recommended.  For the time being, in
 @code{forge-alist} you must still always use @code{example.com/api/v4} as APIHOST@.
 
-If you instead use the @code{auth-source-pass} backend@comma{} then you @strong{must} use
+If you instead use the @code{auth-source-pass} backend, then you @strong{must} use
 @code{example.com} as the value of @code{host}.  Using @code{example.com/api/v4} does not
 work with that backend.
 
 @item
 USERNAME must be the same username you used above as the value of
-the Git variable.  You @strong{must} append @code{^forge} to that@comma{} without any space
+the Git variable.  You @strong{must} append @code{^forge} to that, without any space
 in between.
 
 @item
@@ -557,7 +557,7 @@ TOKEN is the token you generated earlier.
 @end itemize
 
 Finish by typing @code{M-x auth-source-forget-all-cached RET}.  If you don't
-do this@comma{} then Auth-Source may fail to look up the token.
+do this, then Auth-Source may fail to look up the token.
 
 @node Setup a Partially Supported Host
 @section Setup a Partially Supported Host
@@ -566,17 +566,17 @@ Forge currently only supports the Github and Gitlab APIs.
 
 It does however partially support a few additional forge types (see
 @ref{Partially Supported Forges}) and other lighter weight software used
-to host Git repositories@comma{} which also provide a web interfaces (see
-@ref{Supported Semi-Forges}).  Forge doesn't use the APIs of such forges@comma{}
+to host Git repositories, which also provide a web interfaces (see
+@ref{Supported Semi-Forges}).  Forge doesn't use the APIs of such forges,
 but registering the host and adding repositories to the local database
 at least enables the use of commands such as @code{forge-browse}.
 
 @anchor{Tell Forge about the Instance (2)}
 @subheading Tell Forge about the Instance
 
-A few hosts@comma{} which use partially supported forge types@comma{} are available
-out-of-the-box@comma{} because they have an entry in the default value of
-option @code{forge-alist} (also see its docstring).  For example@comma{} the entry
+A few hosts, which use partially supported forge types, are available
+out-of-the-box, because they have an entry in the default value of
+option @code{forge-alist} (also see its docstring).  For example, the entry
 for @uref{https://codeberg.org} in that variable looks like this:
 
 @lisp
@@ -586,10 +586,10 @@ for @uref{https://codeberg.org} in that variable looks like this:
  forge-gitea-repository)            ; CLASS
 @end lisp
 
-To be able to add repositories from a@comma{} so far@comma{} unknown forge instance
-to your local database@comma{} you have to add an entry for that instance to
-@code{forge-alist}.  For example@comma{} assuming you use another Gitea instance@comma{}
-hosted at @uref{https://example.com}@comma{} this might be correct:
+To be able to add repositories from a, so far, unknown forge instance
+to your local database, you have to add an entry for that instance to
+@code{forge-alist}.  For example, assuming you use another Gitea instance,
+hosted at @uref{https://example.com}, this might be correct:
 
 @lisp
 (push '("example.com"               ; GITHOST
@@ -600,17 +600,17 @@ hosted at @uref{https://example.com}@comma{} this might be correct:
 @end lisp
 
 Look at @code{forge-alist} entries of other hosts using the same forge type
-as the instance you are configuring@comma{} to see what format @strong{might} be
+as the instance you are configuring, to see what format @strong{might} be
 appropriate.  You should be able to easily determine and verify
-GITHOST and WEBHOST@comma{} but determining APIHOST is more difficult; you
+GITHOST and WEBHOST, but determining APIHOST is more difficult; you
 might have to ask a colleague.  APIHOST could be something like
-@code{example.com/api/vi}@comma{} but it could also be something like
+@code{example.com/api/vi}, but it could also be something like
 @code{api.example.com}.
 
 @anchor{Add Support for Additional Forge Types}
 @subheading Add Support for Additional Forge Types
 
-For each fully or partially supported forge type@comma{} Forge defines at
+For each fully or partially supported forge type, Forge defines at
 least a class.  The following example is taken from @code{forge-semi.el}:
 
 @lisp
@@ -619,16 +619,16 @@ least a class.  The following example is taken from @code{forge-semi.el}:
    (branch-url-format :initform "https://%h/%p.git/log/?h=%r")
    (remote-url-format :initform "https://%h/%p.git/about"))
   "Cgit from https://git.zx2c4.com/cgit/about.
-Different hosts use different url schemata@comma{} so we need multiple
+Different hosts use different url schemata, so we need multiple
 classes.  See their definitions in \"forge-semi.el\".")
 @end lisp
 
 Once you add a host using that class to @code{forge-alist} and then a
-repository from that host to the local database@comma{} you will be able
+repository from that host to the local database, you will be able
 to use commands such as @code{forge-browse-branch} (but not much more).
 
-If you want to add a repository from another host@comma{} which happens to
-use another software or another URL schemata@comma{} then you might have to
+If you want to add a repository from another host, which happens to
+use another software or another URL schemata, then you might have to
 define an additional class first.  See @code{forge-semi.el} for simple
 examples and grep for @code{defclass forge-.*-repository} for more complex
 ones.
@@ -636,38 +636,38 @@ ones.
 @node Initial Pull
 @chapter Initial Pull
 
-To start using Forge in a certain repository@comma{} visit the Magit status
+To start using Forge in a certain repository, visit the Magit status
 buffer for that repository and type @code{N / a} (@code{forge-add-repository}).  You
-are given a choice to pull all topics@comma{} all topics that were updated
-after a certain date@comma{} or only individual topics.
+are given a choice to pull all topics, all topics that were updated
+after a certain date, or only individual topics.
 
-Beside adding the repository to the database@comma{} this also adds a new
-value to the Git variable @code{remote.<remote>.fetch}@comma{} which causes all
+Beside adding the repository to the database, this also adds a new
+value to the Git variable @code{remote.<remote>.fetch}, which causes all
 pull-request refs (@code{+refs/pull/*/head:refs/pullreqs/*} for Github)
 to be fetched by Git.
 
 Note that it is possible to use the same command to add any repository
-from a supported forge to the database@comma{} without cloning the Git
+from a supported forge to the database, without cloning the Git
 repository first.
 
 The initial fetch can take a while but most of the work is done
 asynchronously.  Storing the information in the database is done
-synchronously though@comma{} so there can be a noticeable hang at the end.
+synchronously though, so there can be a noticeable hang at the end.
 Subsequent fetches are much faster.
 
 Fetching issues from Github is much faster than fetching from other
-forges@comma{} because making a handful of GraphQL requests@comma{} is much faster
+forges, because making a handful of GraphQL requests, is much faster
 than making hundreds of REST requests.
 
 @node Getting Started
 @chapter Getting Started
 
 Much like Git stores information in a local repository and does not
-require a constant internet connection@comma{} Forge retrieves additional
+require a constant internet connection, Forge retrieves additional
 information using a forge's API and stores that in a local database.
 
-Forge's equivalent of @code{git clone} is @code{forge-add-repository}@comma{} which has to
-be run@comma{} before most of Forges features become available in the local
+Forge's equivalent of @code{git clone} is @code{forge-add-repository}, which has to
+be run, before most of Forges features become available in the local
 clone of a Git repository.
 
 @table @asis
@@ -677,19 +677,19 @@ clone of a Git repository.
 This command guides the user through the process of adding a
 repository to the local database.
 
-Note that it is possible to add a repository to the local database@comma{}
-without pulling all the data@comma{} which is useful if you just want to
-create a single issue or pull-request in a repository@comma{} but are not
-interested in existing topics@comma{} e.g.@comma{} because you do not regularly
+Note that it is possible to add a repository to the local database,
+without pulling all the data, which is useful if you just want to
+create a single issue or pull-request in a repository, but are not
+interested in existing topics, e.g., because you do not regularly
 contribute to that repository.  You can later switch to fetching
-all topics@comma{} using @code{forge-complete-repository}.
+all topics, using @code{forge-complete-repository}.
 
-Also note that you can add a repository to the local database@comma{} even
+Also note that you can add a repository to the local database, even
 if no local Git clone exists.
 @end table
 
-Like with Git@comma{} you have to explicitly pull remote changes@comma{} at your
-leisure@comma{} using @code{forge-pull}.
+Like with Git, you have to explicitly pull remote changes, at your
+leisure, using @code{forge-pull}.
 
 @table @asis
 @item @kbd{f n} (@code{forge-pull})
@@ -698,25 +698,25 @@ leisure@comma{} using @code{forge-pull}.
 @kindex N f f
 @findex forge-pull
 This command uses a forge's API to fetch topics and other
-information about the current repository@comma{} and stores the fetched
+information about the current repository, and stores the fetched
 information in the database.
 
 If the current repository isn't being tracked in the local database
-yet@comma{} then this command pivots to behave like @code{forge-add-repository}.
+yet, then this command pivots to behave like @code{forge-add-repository}.
 
 @item @kbd{N m c} (@code{forge-complete-repository})
 @kindex N m c
 @findex forge-complete-repository
-Start fetching all topics of REPOSITORY@comma{} instead of either only the
+Start fetching all topics of REPOSITORY, instead of either only the
 topics that were created after a certain date or only the topics that
 you have previously fetched individually.
 @end table
 
-Forge adds two additional sections to Magit's status buffer@comma{} which
-list open and/or pending issues and pull-requests.  Typing @code{RET}@comma{} while
-the cursor is on a topic section@comma{} shows more information about that
-topic in a separate buffer.  Typing @code{RET} on a topic list section@comma{} shows
-that list in a separate buffer@comma{} where you can apply different filters.
+Forge adds two additional sections to Magit's status buffer, which
+list open and/or pending issues and pull-requests.  Typing @code{RET}, while
+the cursor is on a topic section, shows more information about that
+topic in a separate buffer.  Typing @code{RET} on a topic list section, shows
+that list in a separate buffer, where you can apply different filters.
 
 The other main entry point to the functionality provided by Forge is
 the @code{forge-dispatch} menu.
@@ -733,20 +733,20 @@ sections for information about the available commands.
 @node Lists and Menus
 @chapter Lists and Menus
 
-Topics are listed in two sections in Magit's status buffer@comma{} but can
+Topics are listed in two sections in Magit's status buffer, but can
 also be listed in dedicated buffers.  Likewise individual topics can
 be visited in separate buffers.  In both cases this can be done by
 placing the cursor on the respective section in the status buffer and
-typing @code{RET}@comma{} or by invoking the appropriate command from Forge's main
-menu@comma{} on @code{N} (@code{forge-dispatch}).
+typing @code{RET}, or by invoking the appropriate command from Forge's main
+menu, on @code{N} (@code{forge-dispatch}).
 
-List commands and corresponding menu commands exist for topics@comma{}
-notifications and repositories@comma{} but there isn't always an exclusive
-mapping from menu to buffer.  The main menu (@code{forge-dispatch})@comma{} the
-configuration menu (@code{forge-configure})@comma{} the menu which controls the
-current topic or the topic at point (@code{forge-topic-menu})@comma{} and the
+List commands and corresponding menu commands exist for topics,
+notifications and repositories, but there isn't always an exclusive
+mapping from menu to buffer.  The main menu (@code{forge-dispatch}), the
+configuration menu (@code{forge-configure}), the menu which controls the
+current topic or the topic at point (@code{forge-topic-menu}), and the
 menu which controls the topics listed in the current buffer
-(@code{forge-topics-menu})@comma{} are useful in more than one major mode.
+(@code{forge-topics-menu}), are useful in more than one major mode.
 
 All of these menus feature bindings to directly switch to the other
 appropriate menus.  So it is enough to remember that @code{N} always brings
@@ -755,13 +755,13 @@ there.
 
 @code{C-c C-c} brings up the most appropriate menu for the current buffer.
 In Magit's status buffer the most appropriate menu is Magit's own
-dispatch menu (@code{magit-dispatch})@comma{} so here the quickest way to invoke
-Forge's dispatch menu is @code{N}.  Even in Magit's status buffer@comma{} when the
-cursor is an individual topic or on a topic list section@comma{} @code{C-c C-c}
+dispatch menu (@code{magit-dispatch}), so here the quickest way to invoke
+Forge's dispatch menu is @code{N}.  Even in Magit's status buffer, when the
+cursor is an individual topic or on a topic list section, @code{C-c C-c}
 opens the respective menu (@code{forge-topics-menu} or @code{forge-topic-menu}).
 
 The following sections describe most of the available menu and list
-commands.  For @code{forge-topic-menu}@comma{} see @ref{Editing Topics}.
+commands.  For @code{forge-topic-menu}, see @ref{Editing Topics}.
 
 @anchor{Dispatch and configuration menus}
 @heading Dispatch and configuration menus
@@ -794,49 +794,49 @@ This command displays a menu used to control the list of topics
 displayed in the current buffer.
 
 Note that this command can not only be used in buffers dedicated
-to listing topics@comma{} but also in Magit's status buffer.
+to listing topics, but also in Magit's status buffer.
 
 @item @kbd{N l t} (@code{forge-list-topics})
 @kindex N l t
 @findex forge-list-topics
 This command lists the current repository's issues in a separate
-buffer.  If the list buffer already exists@comma{} this command only
+buffer.  If the list buffer already exists, this command only
 ensures that all types of topics are listed.  If any other filters
-are in effect@comma{} they are left intact.
+are in effect, they are left intact.
 
 @item @kbd{@key{RET} [on "Issues" status section]} (@code{forge-list-issues})
 @kindex RET [on "Issues" status section]
 @findex forge-list-issues
 This command lists the current repository's issues in a separate
-buffer.  If the list buffer already exists@comma{} this command limits the
-list to issues.  If any other filters are in effect@comma{} they are left
+buffer.  If the list buffer already exists, this command limits the
+list to issues.  If any other filters are in effect, they are left
 intact.
 
 @item @kbd{@key{RET} [on "Pull requests" status section]} (@code{forge-list-pullreqs})
 @kindex RET [on "Pull requests" status section]
 @findex forge-list-pullreqs
 This command lists the current repository's pull-requests in a
-separate buffer.  If the list buffer already exists@comma{} this command
+separate buffer.  If the list buffer already exists, this command
 limits the list to pull-requests.  If any other filters are in
-effect@comma{} they are left intact.
+effect, they are left intact.
 
 @item @kbd{N l g} (@code{forge-list-global-topics})
 @kindex N l g
 @findex forge-list-global-topics
 This command lists topics across all tracked repository.  If the
-list buffer already exists@comma{} filters except for the type filter are
+list buffer already exists, filters except for the type filter are
 left in effect.
 @end table
 
 @deffn Command forge-list-global-issues
 This command lists issues across all tracked repository.  If the
-list buffer already exists@comma{} filters except for the type filter are
+list buffer already exists, filters except for the type filter are
 left in effect.
 @end deffn
 
 @deffn Command forge-list-global-pullreqs
 This command lists pull-requests across all tracked repository.  If
-the list buffer already exists@comma{} filters except for the type filter
+the list buffer already exists, filters except for the type filter
 are in effect.
 @end deffn
 
@@ -903,7 +903,7 @@ properties are currently being used:
 @itemize
 @item
 @code{remote-name} The default name suggested by @code{forge-fork} for a fork
-created within this account.  If unspecified@comma{} then the name of the
+created within this account.  If unspecified, then the name of the
 account is used.
 @end itemize
 
@@ -912,23 +912,23 @@ Example: @code{(("tarsius") ("emacsmirror" remote-name "mirror"))}.
 
 @defopt forge-owned-ignored
 This is a list of repository names that are considered to not be
-owned by you@comma{} even though they would have been considered to be
+owned by you, even though they would have been considered to be
 owned by you based on @code{forge-owned-accounts}.
 @end defopt
 
 @anchor{Exiting menus and lists}
 @heading Exiting menus and lists
 
-To exit a menu@comma{} type @code{C-g}.  If the menu was invoked from another menu
-and that menu is useful in the current buffer@comma{} then that menu becomes
+To exit a menu, type @code{C-g}.  If the menu was invoked from another menu
+and that menu is useful in the current buffer, then that menu becomes
 active again.  If that happens and you actually want to quit all
-menus@comma{} then just type @code{C-g} again.  You can also directly exit all menus
-by using @code{C-q}@comma{} instead of @code{C-g}.
+menus, then just type @code{C-g} again.  You can also directly exit all menus
+by using @code{C-q}, instead of @code{C-g}.
 
-Type @code{q} to quit not only the menu@comma{} but also the list or topic detail
-buffer.  That binding is also available when no menu is active@comma{} in
-which case it will simply quit the buffer.  When invoked from a menu@comma{}
-then this binding may return to another list buffer@comma{} in which case
+Type @code{q} to quit not only the menu, but also the list or topic detail
+buffer.  That binding is also available when no menu is active, in
+which case it will simply quit the buffer.  When invoked from a menu,
+then this binding may return to another list buffer, in which case
 some menu may also remain active.
 
 @anchor{Default topic filters}
@@ -950,54 +950,54 @@ Also see @ref{Topic sections in Magit status buffers}.
 @heading Topic sections in Magit status buffers
 
 Forge arranges for certain issues and pull-requests to be list in
-Magit status buffers@comma{} by adding the following functions to
+Magit status buffers, by adding the following functions to
 @code{magit-status-sections-hook}.
 
 Which topics are listed initially is customizable using option
 @code{forge-status-buffer-default-topic-filters} and can be changed
-temporarily for the current buffer@comma{} using @code{N m f} (@code{forge-topics-menu}).
+temporarily for the current buffer, using @code{N m f} (@code{forge-topics-menu}).
 
 @defun forge-insert-discussions
-This function inserts a list of discussions@comma{} by default a list of
+This function inserts a list of discussions, by default a list of
 "active" discussions.
 @end defun
 
 @defun forge-insert-issues
-This function inserts a list of issues@comma{} by default a list of "active"
+This function inserts a list of issues, by default a list of "active"
 issues.
 @end defun
 
 @defun forge-insert-pullreqs
-This function inserts a list of pull-requests@comma{} by default a list of
+This function inserts a list of pull-requests, by default a list of
 "active" pull-requests.
 @end defun
 
 Forge used to provide additional functions to insert hard-coded topic
-subsets@comma{} but they were removed in favor of the more flexible approach
-described above.  If you miss the removed sections@comma{} you can use the
+subsets, but they were removed in favor of the more flexible approach
+described above.  If you miss the removed sections, you can use the
 new @code{forge-insert-topics} helper function to define your own section
 inserter functions.  See its docstring for more information.
 
 If you don't want any topic list sections to be displayed in Magit
-status buffers@comma{} set @code{forge-add-default-sections} to @code{nil} before @code{magit} is
+status buffers, set @code{forge-add-default-sections} to @code{nil} before @code{magit} is
 loaded.
 
 @node Visiting Topics
 @chapter Visiting Topics
 
-The commands@comma{} accessible from @code{forge-topic-menu} (on @code{C-return})@comma{} act on
+The commands, accessible from @code{forge-topic-menu} (on @code{C-return}), act on
 the topic at point; so this menu is useful in buffers dedicated to
-listing topics and notifications (which correspond to topics)@comma{} but
+listing topics and notifications (which correspond to topics), but
 also in the status buffer (which also lists topics).  In buffers
-dedicated to showing details about a single topic@comma{} these commands act
+dedicated to showing details about a single topic, these commands act
 on that topic; so this menu can be used there too.
 
 To switch to this menu from another menu use @code{m s}.  If the cursor is on
 a topic or the current buffer visits a topic.
 
 To display details about a topic in a separate buffer and at the same
-time display the topic menu@comma{} invoke @code{forge-topic-menu} with a prefix
-argument@comma{} i.e.@comma{} @code{C-u RET}.
+time display the topic menu, invoke @code{forge-topic-menu} with a prefix
+argument, i.e., @code{C-u RET}.
 
 @table @asis
 @item @kbd{@key{RET} [on topic]} (@code{forge-visit-this-topic})
@@ -1005,7 +1005,7 @@ argument@comma{} i.e.@comma{} @code{C-u RET}.
 @findex forge-visit-this-topic
 This commands visits the topic at point in a separate buffer.  When
 invoked with a prefix argument then it not only visits the topic in
-a separate buffer@comma{} it at the same time displays the topic menu.
+a separate buffer, it at the same time displays the topic menu.
 
 @item @kbd{N v t} (@code{forge-visit-topic})
 @itemx @kbd{N v i} (@code{forge-visit-issue})
@@ -1016,20 +1016,20 @@ a separate buffer@comma{} it at the same time displays the topic menu.
 @findex forge-visit-topic
 @findex forge-visit-issue
 @findex forge-visit-pullreq
-These commands read a topic@comma{} issue or pull-request and visit it in a
+These commands read a topic, issue or pull-request and visit it in a
 separate buffer.
 
 @item @kbd{N v u} (@code{forge-visit-topic-from-url})
 @kindex N v u
 @findex forge-visit-topic-from-url
 This commands reads an URL and visits the corresponding topic.
-Normally users would yank that URL into the minibuffer@comma{} after
+Normally users would yank that URL into the minibuffer, after
 having copied it from an email or a browser's address bar.
 
 This command is disabled in the menu by default.
 
-If the repository@comma{} which the topic belongs to@comma{} isn't being tracked
-in the local database@comma{} then it is added automatically@comma{} but without
+If the repository, which the topic belongs to, isn't being tracked
+in the local database, then it is added automatically, but without
 fetching all topics.  You can later start fetching all topics using
 the command @code{forge-complete-repository}.
 
@@ -1042,8 +1042,8 @@ the command @code{forge-complete-repository}.
 @findex forge-browse
 @findex forge-browse-this-topic
 @findex forge-browse-this-repository
-These commands visit the topic@comma{} issue(s)@comma{} pull-request(s)@comma{} post@comma{}
-branch@comma{} commit@comma{} remote@comma{} repository or blob at point in a browser.
+These commands visit the topic, issue(s), pull-request(s), post,
+branch, commit, remote, repository or blob at point in a browser.
 @end table
 
 @deffn Command forge-browse-commit
@@ -1071,28 +1071,28 @@ branch@comma{} commit@comma{} remote@comma{} repository or blob at point in a br
 @findex forge-browse-remote
 @findex forge-browse-issues
 @findex forge-browse-pullreqs
-These commands read a topic@comma{} issue(s)@comma{} pull-request(s)@comma{} branch@comma{}
-commit@comma{} remote or repository@comma{} and open it in a browser.
+These commands read a topic, issue(s), pull-request(s), branch,
+commit, remote or repository, and open it in a browser.
 @end table
 
 @deffn Command forge-browse-commit
 This command visit a blob in a browser.
 
-When invoked from a blob- or file-visiting buffer@comma{} visit that blob
-without prompting.  If the region is active@comma{} try to jump to the marked
-line or lines@comma{} and highlight them in the browser.  To what extend that
+When invoked from a blob- or file-visiting buffer, visit that blob
+without prompting.  If the region is active, try to jump to the marked
+line or lines, and highlight them in the browser.  To what extend that
 is possible depends on the forge.  When the region is not active just
-visit the blob@comma{} without trying to jump to the current line.  When
-jumping to a line@comma{} always use a commit hash as part of the URL@.  From
-a file in the worktree with no active region@comma{} instead use the branch
-name as part of the URL@comma{} unless a prefix argument is used.
+visit the blob, without trying to jump to the current line.  When
+jumping to a line, always use a commit hash as part of the URL@.  From
+a file in the worktree with no active region, instead use the branch
+name as part of the URL, unless a prefix argument is used.
 
-When invoked from a Dired buffer@comma{} visit the blob at point without
-prompting.  If a prefix argument is used@comma{} the commit hash is
+When invoked from a Dired buffer, visit the blob at point without
+prompting.  If a prefix argument is used, the commit hash is
 included in the URL@.
 
-When invoked from any other buffer@comma{} prompt the user for a branch or
-commit@comma{} and for a file.
+When invoked from any other buffer, prompt the user for a branch or
+commit, and for a file.
 @end deffn
 
 @node Creating Topics and Posts
@@ -1132,9 +1132,9 @@ This command creates a new issue for the current repository.
 This command creates a new post on an existing topic.  It is only
 available in buffers that visit an existing topic.
 
-If the region is active and marks part of an existing post@comma{} then
-that part of the post is quoted.  When a prefix argument is used@comma{}
-then the complete post@comma{} which point is currently on@comma{} is quoted.
+If the region is active and marks part of an existing post, then
+that part of the post is quoted.  When a prefix argument is used,
+then the complete post, which point is currently on, is quoted.
 @end table
 
 The following commands are available in buffers used to edit posts:
@@ -1155,7 +1155,7 @@ buffer.
 @item @kbd{C-c C-e} (@code{forge-post-dispatch})
 @kindex C-c C-e
 @findex forge-post-dispatch
-This prefix command features the above two commands as suffixes@comma{}
+This prefix command features the above two commands as suffixes,
 and when creating a pull-request also the following command.  More
 suffix commands will likely be added in the future.
 
@@ -1170,26 +1170,26 @@ draft.
 @chapter Editing Topics
 
 Many details about a topic can be changed from the buffer that visits
-that topic@comma{} but also from topic lists@comma{} if the cursor is placed on the
-topic to be edited.  However@comma{} to edit the posts on a topic@comma{} the topic
+that topic, but also from topic lists, if the cursor is placed on the
+topic to be edited.  However, to edit the posts on a topic, the topic
 has to be visited in its own buffer.
 
 @table @asis
 @item @kbd{C-c C-e [on a post section]} (@code{forge-edit-post})
 @kindex C-c C-e [on a post section]
 @findex forge-edit-post
-This command visits an existing post in a separate buffer@comma{} it can
-only be invoked from a topic buffer@comma{} when the cursor is on the post
+This command visits an existing post in a separate buffer, it can
+only be invoked from a topic buffer, when the cursor is on the post
 to be edited.
 
-Editing an existing post is similar to creating a new post@comma{} as
+Editing an existing post is similar to creating a new post, as
 described in the previous section.
 
 @item @kbd{C-c C-k [on a post section]} (@code{forge-delete-comment})
 @kindex C-c C-k [on a post section]
 @findex forge-delete-comment
 This command deletes the post the cursor is on.  The initial message
-that was written when the topic was created@comma{} cannot be deleted@comma{} only
+that was written when the topic was created, cannot be deleted, only
 replies to that.
 
 @item @kbd{N m s} (@code{forge-topic-menu})
@@ -1199,17 +1199,17 @@ replies to that.
 @findex forge-topic-menu
 This command displays a menu used to edit details about the topic
 the cursor is on or that is being visited in the current buffer.
-E.g.@comma{} it can be used to change the status of the topic or to apply
+E.g., it can be used to change the status of the topic or to apply
 labels to it.  Additionally it features a few commands that act on
 that topic.
 
-With a prefix argument@comma{} this additionally visits the topic.
+With a prefix argument, this additionally visits the topic.
 @end table
 
-Details about a topic@comma{} such as its status and labels@comma{} can
-alternatively be edited by visiting the topic in its own buffer@comma{}
+Details about a topic, such as its status and labels, can
+alternatively be edited by visiting the topic in its own buffer,
 navigating to the header that displays the detail and then typing @code{C-c
-C-e}.  This older approach is still available@comma{} but it is usually much
+C-e}.  This older approach is still available, but it is usually much
 faster to use the menu.
 
 @node Pulling
@@ -1217,17 +1217,17 @@ faster to use the menu.
 
 The commands that fetch forge data are available the Forge's main menu
 (@code{forge-dispatch} on @code{N}) and from the same menu (@code{magit-fetch} on @code{f}) that
-is used to fetch Git data.  If @code{magit-pull-or-fetch} is non-@code{nil}@comma{} then
+is used to fetch Git data.  If @code{magit-pull-or-fetch} is non-@code{nil}, then
 they are also available from the @code{magit-pull} menu (on @code{F}).
 
 With Git you have to explicitly pull Git data to make it available in
 the local repository.  Forge works the same; you have to explicitly
 pull to pull data using the forge's API and storing in the local
-database.  This is less disruptive@comma{} more reliable@comma{} familiar and easier
+database.  This is less disruptive, more reliable, familiar and easier
 to understand than if Forge pulled by itself at random intervals.  It
 might however mean that you occasionally invoke a command expecting
 the most recent data to be available and then have to abort and pull
-first.  The same can happen with Git@comma{} e.g.@comma{} you might attempt to merge
+first.  The same can happen with Git, e.g., you might attempt to merge
 a branch that you know exists but haven't actually pulled yet.
 
 @table @asis
@@ -1240,9 +1240,9 @@ This command uses a forge's API to fetch topics and other
 information about the current repository and stores the fetched
 information in the database.
 
-If the current repository is still untracked locally@comma{} or the current
-repository cannot be determined@comma{} this command instead behaves like
-@code{forge-add-repository}@comma{} i.e.@comma{} it adds the repository to the database
+If the current repository is still untracked locally, or the current
+repository cannot be determined, this command instead behaves like
+@code{forge-add-repository}, i.e., it adds the repository to the database
 and then performs the initial pull.
 
 @item @kbd{f N} (@code{forge-pull-notifications})
@@ -1251,7 +1251,7 @@ and then performs the initial pull.
 @kindex N f n
 @findex forge-pull-notifications
 This command uses a forge's API to fetch all notifications from that
-forge@comma{} including@comma{} but not limited to@comma{} the notifications for the
+forge, including, but not limited to, the notifications for the
 current repository.
 
 Fetching notifications fetches associated topics even for repositories
@@ -1270,7 +1270,7 @@ all topics when you added the repository using @code{forge-add-repository}.
 
 Forge provides commands for creating and checking out a new branch or
 work tree from a pull-request.  These commands are available from the
-same transient prefix commands as the suffix commands@comma{} used to create
+same transient prefix commands as the suffix commands, used to create
 and check out branches and work trees in a more generic fashion
 (@code{magit-branch} on @code{b} and @code{magit-worktree} on @code{%}).
 
@@ -1278,15 +1278,15 @@ and check out branches and work trees in a more generic fashion
 @item @kbd{b F} (@code{forge-branch-pullreq})
 @kindex b F
 @findex forge-branch-pullreq
-This command creates and configures a new branch from a pull-request@comma{}
+This command creates and configures a new branch from a pull-request,
 creating and configuring a new remote if necessary.
 
 The name of the local branch is the same as the name of the remote
-branch that you are being asked to merge@comma{} unless the contributor
+branch that you are being asked to merge, unless the contributor
 could not be bothered to properly name the branch before opening the
 pull-request.  The most likely such case is when you are being asked
 to merge something like "fork/master" into "origin/master".  In such
-cases the local branch will be named "pr-N"@comma{} where @code{N} is the
+cases the local branch will be named "pr-N", where @code{N} is the
 pull-request number.
 
 These variables are always set by this command:
@@ -1299,7 +1299,7 @@ These variables are always set by this command:
 pull-request branch is located.
 @item
 @code{branch.<name>.pushRemote} is set to the same remote as
-@code{branch.<name>.pullRequestRemote} if that is possible@comma{} otherwise
+@code{branch.<name>.pullRequestRemote} if that is possible, otherwise
 it is set to the upstream remote.
 @item
 @code{branch.<name>.description} is set to the pull-request title.
@@ -1316,12 +1316,12 @@ as the upstream.  This makes it easy to see what commits you are
 being asked to merge in the section titled something like "Unmerged
 into origin/master".
 
-Like for other commands that create a branch@comma{} it depends on the
+Like for other commands that create a branch, it depends on the
 option @code{magit-branch-prefer-remote-upstream} whether the remote branch
-itself or the respective local branch is used as the upstream@comma{} so
-this section may also be titled@comma{} e.g.@comma{} "Unmerged into master".
+itself or the respective local branch is used as the upstream, so
+this section may also be titled, e.g., "Unmerged into master".
 
-When necessary and possible@comma{} the remote pull-request branch is
+When necessary and possible, the remote pull-request branch is
 configured to be used as the push-target.  This makes it easy to see
 what further changes the contributor has made since you last
 reviewed their changes in the section titled something like
@@ -1330,35 +1330,35 @@ fork/new-feature".
 
 @itemize
 @item
-If the pull-request branch is located in the upstream repository@comma{}
+If the pull-request branch is located in the upstream repository,
 then you probably have set @code{remote.pushDefault} to that repository.
 However some users like to set that variable to their personal
-fork@comma{} even if they have push access to the upstream@comma{} so
+fork, even if they have push access to the upstream, so
 @code{branch.<name>.pushRemote} is set anyway.
 
 @item
-The push-remote is configured using @code{branch.<name>.pushRemote}@comma{} even
-if the used value is identical to that of @code{remote.pushDefault}@comma{} just
+The push-remote is configured using @code{branch.<name>.pushRemote}, even
+if the used value is identical to that of @code{remote.pushDefault}, just
 in case you change the value of the latter later on.  Additionally
 the variable @code{branch.<name>.pullRequestRemote} is set to the remote
 on which the pull-request branch is located.
 
 @item
-If the pull-request branch is located on the contributor's fork@comma{}
-then you@comma{} as a maintainer of the upstream repository@comma{} are usually
-allowed to push to that branch anyway.  (However@comma{} the contributor
-could explicitly disallow this@comma{} but in my experience that rarely
+If the pull-request branch is located on the contributor's fork,
+then you, as a maintainer of the upstream repository, are usually
+allowed to push to that branch anyway.  (However, the contributor
+could explicitly disallow this, but in my experience that rarely
 happens.)
 
 @item
-As mentioned above@comma{} contributors sometimes fail to use a dedicated
+As mentioned above, contributors sometimes fail to use a dedicated
 branch for their pull-requests and this command is thus forced to
 make up a branch name such as "pr-313".
 
 Usually a maintainer would use @code{magit-push-current-to-pushremote}
 (on @code{p}) to push to the contributor's pull-request branch on their
 fork.  For a branch named "pr-313" that does not work. (Instead
-of pushing to "fork/main"@comma{} it would unsuccessfully attempt to
+of pushing to "fork/main", it would unsuccessfully attempt to
 create a new branch "pr-313" on the fork.)  In such situations
 the @code{magit-push} menu offers an alternative command for pushing to
 the pull-request branch: @code{forge-push-to-unnamed-pullreq} (on @code{N}).
@@ -1376,23 +1376,23 @@ the new branch.
 @findex forge-checkout-worktree
 This command creates and configures a new branch from a pull-request
 the same way @code{forge-branch-pullreq} does.  Additionally it checks out
-the new branch@comma{} using a new working tree.
+the new branch, using a new working tree.
 @end table
 
 @defopt forge-checkout-worktree-read-directory-function
-This function is used by @code{forge-checkout-worktree}@comma{} to read the new
+This function is used by @code{forge-checkout-worktree}, to read the new
 worktree directory where it checks out the pull-request.  It takes
 the pull-request as the only argument and must return a directory.
 @end defopt
 
-When you delete a pull-request branch@comma{} which was created using one of
-the above three commands@comma{} then @code{magit-branch-delete} usually offers to
+When you delete a pull-request branch, which was created using one of
+the above three commands, then @code{magit-branch-delete} usually offers to
 also delete the corresponding remote.  It does not offer to delete a
-remote if (1) the remote is the upstream remote@comma{} and/or (2) if other
+remote if (1) the remote is the upstream remote, and/or (2) if other
 branches are being fetched from the remote.
 
-Note that you have to delete the local branch (e.g.@comma{} "feature") for
-this to work.  If you delete the tracking branch (e.g.@comma{} "fork/feature")@comma{}
+Note that you have to delete the local branch (e.g., "feature") for
+this to work.  If you delete the tracking branch (e.g., "fork/feature"),
 then the remote is never removed.
 
 @node Miscellaneous Commands
@@ -1405,13 +1405,13 @@ then the remote is never removed.
 @kindex m M [if enabled]
 @findex forge-merge
 This command merges the current pull-request using the forge's API@.
-If there is no current pull-request or with a prefix argument@comma{} then
+If there is no current pull-request or with a prefix argument, then
 it reads a pull-request to visit instead.
 
 The "merge method" to be used is read from the user.
 
 Use of this command is discouraged.  Unless the remote repository is
-configured to disallow that@comma{} you should instead merge locally and
+configured to disallow that, you should instead merge locally and
 then push the target branch.  Forges detect that you have done that
 and respond by automatically marking the pull-request as merged.
 
@@ -1425,7 +1425,7 @@ access to.
 
 Currently this only supports Github and Gitlab.
 
-With a prefix argument@comma{} fork all branches@comma{} not just the default
+With a prefix argument, fork all branches, not just the default
 branch.  On Gitlab it is not possible to fork only the default.
 
 @item @kbd{N - H} (@code{forge-toggle-topic-legend})
@@ -1443,12 +1443,12 @@ Magit status buffer.
 @item @kbd{C-c C-w} (@code{forge-copy-url-at-point-as-kill})
 @kindex C-c C-w
 @findex forge-copy-url-at-point-as-kill
-This command copies the url for the topic@comma{} issue(s)@comma{}
-pull-request(s)@comma{} post@comma{} branch@comma{} commit@comma{} remote or repository to the
+This command copies the url for the topic, issue(s),
+pull-request(s), post, branch, commit, remote or repository to the
 kill-ring.
 
-This determines the url the same way as @code{forge-browse} does@comma{} but then
-adds it to the kill-ring@comma{} instead of visiting it in a browser.
+This determines the url the same way as @code{forge-browse} does, but then
+adds it to the kill-ring, instead of visiting it in a browser.
 
 @item @kbd{M b r} (@code{forge-rename-default-branch})
 @kindex M b r
@@ -1456,7 +1456,7 @@ adds it to the kill-ring@comma{} instead of visiting it in a browser.
 This command rename the default branch to a new name read from the
 user.
 
-This changes the name on the upstream remotely and locally@comma{} and
+This changes the name on the upstream remotely and locally, and
 update the upstream remotes of local branches accordingly.
 @end table
 
@@ -1464,7 +1464,7 @@ update the upstream remotes of local branches accordingly.
 This command configures Git to fetch all pull-requests.
 
 This is done by adding @code{+refs/pull/*/head:refs/pullreqs/*} to the
-value of @code{remote.REMOTE.fetch}@comma{} where REMOTE is the upstream remote.
+value of @code{remote.REMOTE.fetch}, where REMOTE is the upstream remote.
 @end deffn
 
 @deffn Command forge-add-user-repositories
@@ -1488,16 +1488,16 @@ database.
 
 @deffn Command forge-remove-topic-locally
 This command reads a topic and removes it from the local database.
-When the region marks multiple topics@comma{} then offer to remove them all.
+When the region marks multiple topics, then offer to remove them all.
 
-The topic is not removed from the forge and@comma{} if it is later modified@comma{}
+The topic is not removed from the forge and, if it is later modified,
 then it will be added to the database again when fetching all topics.
 
 This is useful for users who only fetch individual topics and want to
 remove the topics they are no longer interested in.  This can also be
-used to remove topics locally@comma{} which have already been removed on the
+used to remove topics locally, which have already been removed on the
 forge (the service).  Forge (the package) cannot automatically detect
-when that happens@comma{} because given how the APIs work@comma{} this would be too
+when that happens, because given how the APIs work, this would be too
 expensive.
 @end deffn
 
@@ -1505,7 +1505,7 @@ expensive.
 This command moves the current database file to the trash and
 creates a new empty database.
 
-This is useful after the database's table schemata have changed@comma{}
+This is useful after the database's table schemata have changed,
 which will happen a few times while the Forge functionality is still
 under heavy development.
 @end deffn
@@ -1520,14 +1520,14 @@ This option specifies the file used to store the forge database.
 @defopt forge-topic-wash-title-hook
 Functions used to highlight parts of each individual topic title.
 
-These functions are called in order@comma{} in a buffer that containing the
-topic title.  They should set text properties as they see fit@comma{} usually
-just @code{font-lock-face}.  Before each function is called@comma{} point is at the
+These functions are called in order, in a buffer that containing the
+topic title.  They should set text properties as they see fit, usually
+just @code{font-lock-face}.  Before each function is called, point is at the
 beginning of the buffer.
 @end defopt
 
 @defopt forge-topic-repository-slug-width
-This option specifies the width of repository slugs (i.e.@comma{}
+This option specifies the width of repository slugs (i.e.,
 "OWNER/NAME").
 @end defopt
 
@@ -1546,7 +1546,7 @@ repositories.
 Each element has the form @code{(HEADER SOURCE WIDTH SORT PROPS)}.
 
 HEADER is the string displayed in the header.  WIDTH is the width
-of the column.  SOURCE is used to get the value@comma{} it has to be the
+of the column.  SOURCE is used to get the value, it has to be the
 name of a slot of @code{forge-repository} or a function that takes
 such an object as argument.  SORT is a boolean or a function used
 to sort by this column.  Supported PROPS include @code{:right-align}
@@ -1580,7 +1580,7 @@ forge posts.
 
 @defopt forge-bug-reference-hooks
 This option lists the hooks to which @code{forge-bug-reference-setup} is
-added.  It has to be customized before @code{forge} is loaded@comma{} or it won't
+added.  It has to be customized before @code{forge} is loaded, or it won't
 take effect.
 @end defopt
 
@@ -1588,35 +1588,35 @@ take effect.
 @appendix How Forge Detection Works
 
 Forge uses the Ghub package to communicate with forge APIs.  For more
-information about Ghub@comma{} see @ref{Top,,,ghub,}.
+information about Ghub, see @ref{Top,,,ghub,}.
 
 Ghub does @strong{not} associate a given local repository with a repository on
 a forge.  The Forge package itself takes care of this.  In doing so it
 ignores the Git variable @code{ghub.host} and other @code{*.host} variables used by
-Ghub.  (But @code{github.user}@comma{} and other variables used to specify the user@comma{}
+Ghub.  (But @code{github.user}, and other variables used to specify the user,
 are honored).
 
-Forge associates the local repository with a forge repository@comma{} by first
-determining which remote is associated with the upstream repository@comma{}
+Forge associates the local repository with a forge repository, by first
+determining which remote is associated with the upstream repository,
 and then looking that up in @code{forge-alist}.
 
-If only one remote exists@comma{} then Forge uses that unconditionally.  To
-reduce the number of support requests@comma{} this is even the case if the
-Git variable @code{forge.remote} names another@comma{} non-existent@comma{} remote.
+If only one remote exists, then Forge uses that unconditionally.  To
+reduce the number of support requests, this is even the case if the
+Git variable @code{forge.remote} names another, non-existent, remote.
 
-If several remotes exist@comma{} then a remote may be selected based on its
+If several remotes exist, then a remote may be selected based on its
 name.  Almost always we want to fetch the data associated with the
-upstream repository@comma{} so that is what the logic described here tries to
-achieve.  The convention is to name the upstream remote "origin"@comma{} and
-if that convention were universally followed@comma{} then things would be
-trivial.  However many people name the upstream remote "upstream"@comma{}
+upstream repository, so that is what the logic described here tries to
+achieve.  The convention is to name the upstream remote "origin", and
+if that convention were universally followed, then things would be
+trivial.  However many people name the upstream remote "upstream",
 which also makes sense.
 
 @quotation
-Note@comma{} however@comma{} that even though a surprising number of people do just
-that@comma{} it does not make any sense to use the name "origin" to refer to
-a fork; not even to your own fork.  A fork is a @strong{copy} of the original@comma{}
-"copy" is an antonym for "original"@comma{} and the word "origin" is not only
+Note, however, that even though a surprising number of people do just
+that, it does not make any sense to use the name "origin" to refer to
+a fork; not even to your own fork.  A fork is a @strong{copy} of the original,
+"copy" is an antonym for "original", and the word "origin" is not only
 closely related to but is even contained in the word "original".
 Naming a fork the "origin" is at best extremely confusing.
 
@@ -1625,33 +1625,33 @@ Naming a fork the "origin" is at best extremely confusing.
 a thing made to be similar or identical to another.
 
 @item original
-the earliest form of something@comma{} from which copies may be
+the earliest form of something, from which copies may be
 made.
 
 @item origin
-the point or place where something begins@comma{} arises@comma{} or is
+the point or place where something begins, arises, or is
 derived.
 @end table
 
 @end quotation
 
-If several remotes exist@comma{} then the following remote names are tried in
+If several remotes exist, then the following remote names are tried in
 order and the first remote thus named that exists in the repository is
 used.
 
 @enumerate
 @item
-The value of the Git variable @code{forge.remote}@comma{} if set.  If the
-variable has a value but no remote by the specified name exists@comma{}
-then a warning is shown@comma{} but otherwise this conflict is ignored.
-This behavior is arguably odd@comma{} but due to historic and pragmatic
+The value of the Git variable @code{forge.remote}, if set.  If the
+variable has a value but no remote by the specified name exists,
+then a warning is shown, but otherwise this conflict is ignored.
+This behavior is arguably odd, but due to historic and pragmatic
 reasons it is the least painful path forward.
 
 @item
-The remote named @code{upstream}@comma{} if it exists.
+The remote named @code{upstream}, if it exists.
 
 @item
-The remote named @code{origin}@comma{} if it exists.
+The remote named @code{origin}, if it exists.
 @end enumerate
 
 The remote named "upstream" is preferred over the remote named
@@ -1665,12 +1665,12 @@ The value of this variable specifies the remote from which Forge
 fetches data.  It is usually best to leave this unspecified and to
 rely on the behavior described above.
 
-If the remote has to be specified explicitly@comma{} then this should be
-done locally@comma{} for a single repository.
+If the remote has to be specified explicitly, then this should be
+done locally, for a single repository.
 
-Only ever set this globally@comma{} if you consistently use a certain name
+Only ever set this globally, if you consistently use a certain name
 to refer to the upstream repository and it isn't one of "upstream"
-or "origin"@comma{} and you @strong{never} use that name to refer to a repository
+or "origin", and you @strong{never} use that name to refer to a repository
 that does @strong{not} refer to the upstream repository.
 @end defvar
 
@@ -1682,13 +1682,13 @@ This command changes the value of the @code{forge.remote} Git variable in
 the current repository.
 @end table
 
-If this variable is set@comma{} then Forge uses the remote by that name@comma{} if
-it exists@comma{} the same way it may have used @code{origin} if the variable were
-undefined.  I.e.@comma{} it does not fall through to try @code{origin} if no remote
+If this variable is set, then Forge uses the remote by that name, if
+it exists, the same way it may have used @code{origin} if the variable were
+undefined.  I.e., it does not fall through to try @code{origin} if no remote
 by your chosen name exists.
 
-Once the upstream remote has been determined@comma{} Forge looks it up in
-@code{forge-alist}@comma{} using the host part of the URL as the key.  For example@comma{}
+Once the upstream remote has been determined, Forge looks it up in
+@code{forge-alist}, using the host part of the URL as the key.  For example,
 the key for @code{git@@github.com:magit/forge.git} is @code{github.com}.
 
 @defopt forge-alist
@@ -1703,7 +1703,7 @@ Git.
 
 @item
 APIHOST is the host used to access the forge's API@.  For some forges
-the isn't just a host@comma{} but a host followed by the path to the API's
+the isn't just a host, but a host followed by the path to the API's
 endpoint.
 
 @item
@@ -1721,13 +1721,13 @@ Complications:
 @item
 When connecting to a Github Enterprise edition whose REST API's
 end point is "<host>/v3" and whose GraphQL API's end point is
-"<host>/graphql"@comma{} then use "<host>/v3" as APIHOST@.  This is
+"<host>/graphql", then use "<host>/v3" as APIHOST@.  This is
 a historic accident.  See issue #174.
 
 @item
 WEBHOST and CLASS cannot be changed once you have added one or
 more repositories from a forge.  Changing GITHOST and/or APIHOST
-may be possible@comma{} but should seldom be necessary.
+may be possible, but should seldom be necessary.
 @end itemize
 @end defopt
 
@@ -1742,9 +1742,9 @@ Both forges and semi-forges provide web interfaces for Git
 repositories.  Forges additionally support pull-requests and issues
 and make those and other information available using an API@.
 
-When a forge is only partially supported@comma{} then that means that only
-the functionality that does not require the API is implemented@comma{} or
-in other words@comma{} that the forge is only supported as a semi-forge.
+When a forge is only partially supported, then that means that only
+the functionality that does not require the API is implemented, or
+in other words, that the forge is only supported as a semi-forge.
 
 A host is a particular instance of a forge.  For example the hosts
 @uref{https://gitlab.com} and @uref{https://salsa.debian.org} are both instances of
@@ -1781,13 +1781,13 @@ rather incomplete.
 
 @item
 The Github GraphQL API has a hard-coded timeout on queries. The only solution
-is to reduce the number of entities we query at once@comma{} which can be done by
+is to reduce the number of entities we query at once, which can be done by
 adjusting either the @code{forge.graphqlItemLimit} git variable or the field "GQL
 entity limit" in a status buffer.
 
 @item
 Forge depends on the @code{updated_at} field being updated when
-appropriate.  For Github pull-requests at least@comma{} that is not always
+appropriate.  For Github pull-requests at least, that is not always
 done.
 @end itemize
 
@@ -1843,20 +1843,20 @@ This is the next forge whose API will be supported.
 @appendixsubsec Gitea https://gitea.io
 
 Once Forgejo is supported it might be fairly simple to support Gitea
-too@comma{} because the former is a fork of the latter@comma{} and their APIs might
+too, because the former is a fork of the latter, and their APIs might
 still be similar enough.
 
 @anchor{Gogs https//gogsio}
 @appendixsubsec Gogs https://gogs.io
 
 Once Forgejo is supported it might be fairly simple to support Gogs
-too@comma{} because the Forgejo is a fork of Gitea@comma{} which is a fork of Gogs@comma{}
+too, because the Forgejo is a fork of Gitea, which is a fork of Gogs,
 and their APIs might still be similar enough.
 
 @anchor{Bitbucket https//bitbucketorg}
 @appendixsubsec Bitbucket https://bitbucket.org
 
-I don't plan to support Bitbucket's API any time soon@comma{} and it gets
+I don't plan to support Bitbucket's API any time soon, and it gets
 less likely that I will every do it every time I look at it.
 
 @anchor{Bitbucket Caveats}
@@ -1871,12 +1871,12 @@ implementation is buggy.
 Atlassian's offering contains two very distinct implementations
 that are both called "Bitbucket".  Forge only supports the
 implementation whose only instance is available at
-@uref{https://bitbucket.org}@comma{} because I only have access to that.
+@uref{https://bitbucket.org}, because I only have access to that.
 
 @item
-Unlike all other forges@comma{} Bitbucket does not expose pull-requests
+Unlike all other forges, Bitbucket does not expose pull-requests
 as references in the upstream repository.  For that reason Forge
-actually treats it as a semi-forge@comma{} not as forge whose API is not
+actually treats it as a semi-forge, not as forge whose API is not
 supported yet.  This means that you cannot checkout pull-requests
 locally.  There is little hope that this will ever get fixed; the
 respective issue was opened six years ago and there has been no
@@ -1903,7 +1903,7 @@ progress since: @uref{https://bitbucket.org/site/master/issues/5814}.
 @itemize
 @item
 I could find only one public installation
-(@uref{https://git.savannah.gnu.org})@comma{} which gives users the choice
+(@uref{https://git.savannah.gnu.org}), which gives users the choice
 between Gitweb and Cgit.  The latter seems more popular (not
 just on this site).
 @end itemize
@@ -1988,66 +1988,66 @@ issues.
 
 @menu
 * Forge repositories in database vs. Git repositories: Forge repositories in database vs Git repositories. 
-* @code{error in process filter HTTP Error 502@comma{} "Bad gateway"}: @code{error in process filter HTTP Error 502 "Bad gateway"}. 
+* @code{error in process filter HTTP Error 502, "Bad gateway"}: @code{error in process filter HTTP Error 502 "Bad gateway"}. 
 @end menu
 
 @node Forge repositories in database vs Git repositories
 @appendixsec Forge repositories in database vs. Git repositories
 
-Forge differs from Emacs packages like Magit and @code{project}@comma{} in that its
-first-class objects are remote repositories@comma{} not local file system
-paths.  Forge "knows" about a set of remote repositories@comma{} which can
+Forge differs from Emacs packages like Magit and @code{project}, in that its
+first-class objects are remote repositories, not local file system
+paths.  Forge "knows" about a set of remote repositories, which can
 be listed with @code{M-x forge-list-repositories}.  Forge adds a remote
-repository to its known/tracked set upon explicit request@comma{} typically
+repository to its known/tracked set upon explicit request, typically
 @code{N f f} from Magit.
 
-A repository may be optionally associated with a local git worktree@comma{}
+A repository may be optionally associated with a local git worktree,
 but this is not exclusive.  It is possible to use the same forge
 repository with multiple worktrees.  The last used worktree will be
 remembered as the associated one.
 
-Mapping from @code{default-directory} to a Forge repository is supported@comma{}
-according to fixed rules (see @ref{How Forge Detection Works}).  In short@comma{}
+Mapping from @code{default-directory} to a Forge repository is supported,
+according to fixed rules (see @ref{How Forge Detection Works}).  In short,
 if there is only one remote Forge uses that; otherwise it tries the
-value of @code{forge.remote}@comma{} then a remote named @code{upstream}@comma{} if that exists@comma{}
-and finally a remote named @code{origin}@comma{} if that exists.
+value of @code{forge.remote}, then a remote named @code{upstream}, if that exists,
+and finally a remote named @code{origin}, if that exists.
 
 Forge stores its state in a central database (@code{forge-database-file}).
-The database is largely cache-like@comma{} but not entirely.  At least the
+The database is largely cache-like, but not entirely.  At least the
 following information cannot be re-fetched if the database is deleted:
 
 @itemize
 @item
-Choice of repositories@comma{} individual topics (in selective workflow)
+Choice of repositories, individual topics (in selective workflow)
 @item
-Choice of selective mode@comma{} or not having fetched topics before some date
+Choice of selective mode, or not having fetched topics before some date
 @item
 Associated worktree path
 @item
-Private per-topic status (unread@comma{} pending@comma{} done)@comma{} topic marks (and
-mark definitions)@comma{} notes
+Private per-topic status (unread, pending, done), topic marks (and
+mark definitions), notes
 @end itemize
 
 @node @code{error in process filter HTTP Error 502 "Bad gateway"}
-@appendixsec @code{error in process filter: HTTP Error: 502@comma{} "Bad gateway"}
+@appendixsec @code{error in process filter: HTTP Error: 502, "Bad gateway"}
 
-This is a frequently occurring error.  Adding some formatting@comma{} the
+This is a frequently occurring error.  Adding some formatting, the
 full error is:
 
 @lisp
-error in process filter: ghub--signal-error: HTTP Error: 502@comma{}
-  "Bad gateway"@comma{} "/graphql"@comma{}
+error in process filter: ghub--signal-error: HTTP Error: 502,
+  "Bad gateway", "/graphql",
   ((data . "null")
    (errors ((message . "Something went wrong while executing your query.
-      This may be the result of a timeout@comma{} or it could be a GitHub bug.
+      This may be the result of a timeout, or it could be a GitHub bug.
       Please include `CC2C:4FEA:A1771C1:CBF40CE:5C33F7E5`
       when reporting this issue."))))
 @end lisp
 
 This indicates that something went wrong within Github's network.
-Unfortunately the reason given is rather vague@comma{} but I believe this
+Unfortunately the reason given is rather vague, but I believe this
 usually happens when there are topics with one or two magnitudes more
-posts than usual@comma{} which can cause GraphQL responses to become huge.
+posts than usual, which can cause GraphQL responses to become huge.
 
 This can be countered in the affected repository by setting the Git
 variable @code{forge.graphqlItemLimit}:
@@ -2056,11 +2056,11 @@ variable @code{forge.graphqlItemLimit}:
 git config --local forge.graphqlItemLimit 20
 @end example
 
-The default is specified using the @code{ghub-graphql-items-per-request}@comma{}
+The default is specified using the @code{ghub-graphql-items-per-request},
 which defaults to 50 (down from Github's default and maximum of 100).
 
-Fetching less items per request results in more requests@comma{} which slows
-down the process@comma{} which is why the default should not be too small@comma{}
+Fetching less items per request results in more requests, which slows
+down the process, which is why the default should not be too small,
 but for some repositories a more aggressive limit is needed.
 
 @node Keystroke Index
