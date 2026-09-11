@@ -328,8 +328,10 @@ an error."
                (forge-get-repository :known? nil 'notatpt)))))
 
 (defun forge-buffer-repository ()
-  (and-let ((id forge-buffer-repository))
-    (forge-get-repository :id id)))
+  (and-let* ((id forge-buffer-repository)
+             (repo (forge-get-repository :id id))
+             (_(member (forge--get-remote) (list nil (oref repo remote)))))
+    repo))
 
 (defun forge-set-buffer-repository ()
   "Initialize the value of variable `forge-buffer-repository'."
