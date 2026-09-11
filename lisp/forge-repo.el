@@ -485,7 +485,7 @@ forges and hosts."
        (?P . ,(string-replace "/" "%2F" path))))))
 
 (defun forge--repo-selective-p (&optional repo)
-  (and-let ((repo (or repo (forge-get-repository :tracked))))
+  (and-let ((repo (or repo (forge-get-repository :tracked?))))
     (or (oref repo selective-p)
         ;; We do not record whether the initial pull only fetched topics
         ;; created after a certain date, so we have to use a heuristic.
