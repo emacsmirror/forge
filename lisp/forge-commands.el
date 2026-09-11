@@ -122,7 +122,6 @@ Takes the pull-request as only argument and must return a directory."
 (transient-define-prefix forge-configure ()
   "Configure current repository and global settings."
   :transient-non-suffix #'transient--do-call
-  :refresh-suffixes t
   :environment #'forge--menu-environment
   :column-widths forge--topic-menus-column-widths
   [forge--topic-menus-group
@@ -1289,7 +1288,6 @@ upstream remote."
 ;;;###autoload(autoload 'forge-add-repository "forge-commands" nil t)
 (transient-define-prefix forge-add-repository (&optional repo limit callback)
   "Add a repository to the database."
-  :refresh-suffixes t
   [:class transient-subgroups
 
    ;; Already tracked.
