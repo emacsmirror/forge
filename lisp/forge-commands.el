@@ -202,14 +202,11 @@ repository cannot be determined, instead invoke `forge-add-repository'."
     (forge--pull-notifications 'forge-github-repository "github.com")))
 
 ;;;###autoload(autoload 'forge-pull-topic "forge-commands" nil t)
-(transient-define-suffix forge-pull-topic (number)
-  "Read a topic TYPE and NUMBER pull data about it from its forge."
-  :inapt-if-not (lambda () (and (forge-get-repository :tracked?)
-                           (forge--get-github-repository)))
-  (interactive
-    (list (read-number "Pull topic: "
-                       (and$ (forge-current-topic) (oref $ number)))))
-  (forge--pull-topic (forge-get-repository :tracked) number))
+(transient-define-suffix forge-pull-topic (topic)
+  "Pull a TOPIC from its forge."
+  :inapt-if-not (##forge-get-repository :tracked?)
+  (interactive (list (forge-read-topic "Pull topic" t)))
+  (forge--pull-topic (forge-get-repository :tracked) topic))
 
 ;;;###autoload(autoload 'forge-pull-this-topic "forge-commands" nil t)
 (transient-define-suffix forge-pull-this-topic ()
