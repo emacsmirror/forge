@@ -750,19 +750,13 @@ can be selected from the start."
                  (completion-table-dynamic
                   (let (all-choices)
                     (lambda (_string)
-                      ;; For other frameworks, the minibuffer is current
-                      ;; when this function is called, but for Helm we
-                      ;; have to make it so.  Starting with Helm commit
-                      ;; 5e7c8498, this isn't necessary anymore.  See
-                      ;; https://github.com/emacs-helm/helm/issues/2744.
-                      (with-selected-window (minibuffer-window)
-                        (cond
-                          (all-choices)
-                          (forge-limit-topic-choices choices)
-                          (t
-                           (setq alist (forge--topic-collection
-                                        (forge--list-topics all repo)))
-                           (setq all-choices (mapcar #'car alist))))))))
+                      (cond
+                        (all-choices)
+                        (forge-limit-topic-choices choices)
+                        (t
+                         (setq alist (forge--topic-collection
+                                      (forge--list-topics all repo)))
+                         (setq all-choices (mapcar #'car alist)))))))
                  nil t nil nil default))
             (magit-completing-read prompt choices nil t nil nil default))))
     (cdr (assoc choice alist))))
