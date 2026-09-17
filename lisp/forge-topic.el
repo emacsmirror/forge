@@ -2056,10 +2056,10 @@ When point is on the answer, then unmark it and mark no other."
           `(((prompt . ,(concat (propertize "Blank issue" 'face 'bold)
                                 " — Create a new issue from scratch")))))
      (mapcar (lambda (link)
-               `(,@link
-                 (prompt . ,(let-alist link
+               `((prompt . ,(let-alist link
                               (concat (propertize .name 'face 'bold)
-                                      " — " .about)))))
+                                      " — " .about)))
+                 ,@link))
              .contact_links))))
 
 (defun forge--topic-parse-template (name)
