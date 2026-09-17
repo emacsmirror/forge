@@ -200,20 +200,9 @@ See `forge-alist' for valid Git hosts."
   (setq host  (substring-no-properties host))
   (setq owner (substring-no-properties owner))
   (setq name  (substring-no-properties name))
-  (cond-let
-    ((memq demand '(:tracked :tracked? :known? :insert! :valid? :stub :stub?)))
-    ([corrected (pcase demand
-                  ('t      :tracked)
-                  ('full   :tracked?)
-                  ('nil    :known?)
-                  ('create :insert!)
-                  ('stub   :stub)
-                  ('maybe  :stub?))]
-     (message "Obsolete value for `%s's DEMAND: `%s'; use `%s' instead"
-              'forge-get-repository demand corrected)
-     (setq demand corrected))
-    ((error "Unknown value for `%s's DEMAND: `%s'"
-            'forge-get-repository demand)))
+  (unless (memq demand
+                '(:tracked :tracked? :known? :insert! :valid? :stub :stub?))
+    (error "Unknown value for `forge-get-repository's DEMAND: `%s'" demand))
   (cond-let
     ([spec (forge--get-forge-host host t)]
      (pcase-let*
