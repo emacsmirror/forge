@@ -818,7 +818,7 @@ as a string."
   (when (minibufferp)
     (save-excursion
       (goto-char (point-min))
-      (when (re-search-forward " (.+? for all)" (minibuffer-prompt-end) t)
+      (when (re-search-forward " ([^(]+? for all)" (minibuffer-prompt-end) t)
         (let ((inhibit-read-only t))
           (replace-match ""))))))
 

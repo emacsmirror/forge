@@ -205,7 +205,12 @@ repository cannot be determined, instead invoke `forge-add-repository'."
 (transient-define-suffix forge-pull-topic (topic)
   "Pull a TOPIC from its forge."
   :inapt-if-not (##forge-get-repository :tracked?)
-  (interactive (list (forge-read-topic "Pull topic" t)))
+  (interactive
+    (list (if (cl-typep (forge-get-repository :tracked)
+                        'forge-gitlab-repository)
+              (forge-read-topic
+               "Pull topic (existing or !N for pullreq, #N for issue)" t)
+            (forge-read-topic "Pull topic" t))))
   (forge--pull-topic (forge-get-repository :tracked) topic))
 
 ;;;###autoload(autoload 'forge-pull-this-topic "forge-commands" nil t)
