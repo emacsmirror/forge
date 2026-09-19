@@ -88,6 +88,18 @@ beginning of the buffer."
   :group 'forge
   :type 'natnum)
 
+(defcustom forge-browse-topics-using-forge t
+  "Whether to visit topic URLs using Forge.
+
+If non-nil, `bug-reference-push-button' (on a reference such as #521)
+and `browse-url' (on a supported topic url) visit the topic using a
+Forge buffer.  If the topic isn't known locally, it is visited using
+a browser anyway.  Invoke these commands with a prefix argument to
+force them to use a browser even when the topic is known."
+  :package-version '(forge . "0.7.0")
+  :group 'forge
+  :type 'boolean)
+
 (defcustom forge-bug-reference-hooks
   '(find-file-hook
     forge-post-mode-hook
@@ -2103,6 +2115,28 @@ When point is on the answer, then unmark it and mark no other."
           (draft     . ,(and (booleanp .draft) .draft))))
     `((prompt . ,(propertize name 'face 'bold))
       (text   . ,(string-trim (buffer-str))))))
+
+;;; Browse-Url
+
+(defun forge--browse-url-handler-predicate (url)
+  (and-let* ((_ forge-browse-topics-using-forge)
+             (_ (not current-prefix-arg))
+             (_ (string-match "\
+/\\(issues\\|pull\\|discussions\\|merge_requests\\)/\\([0-9]+\\)\\'" url))
+             (number (string-to-number (match-string 2 url)))
+             (repo-url (substring url 0 (match-beginning 1)))
+             (repo (forge-get-repository repo-url nil :tracked?)))
+    ;; Unlike in `forge-visit-topic-from-url' this cannot fetch a
+    ;; missing topic first, because that is done asynchronously,
+    ;; and as a predicate, this needs an immediately answer.
+    (forge-get-topic repo number)))
+
+(defun forge--browse-url-handler (url _)
+  (forge-visit-topic-from-url url))
+
+(cl-pushnew (cons #'forge--browse-url-handler-predicate
+                  #'forge--browse-url-handler)
+            browse-url-default-handlers :test #'equal)
 
 ;;; Bug-Reference
 

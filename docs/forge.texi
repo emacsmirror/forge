@@ -1584,6 +1584,16 @@ added.  It has to be customized before @code{forge} is loaded, or it won't
 take effect.
 @end defopt
 
+@defopt forge-browse-topics-using-forge
+This option controls whether topic URLs are visited using Forge.
+
+If non-@code{nil}, @code{bug-reference-push-button} (on a reference such as #521)
+and @code{browse-url} (on a supported topic url) visit the topic using a
+Forge buffer.  If the topic isn't known locally, it is visited using
+a browser anyway.  Invoke these commands with a prefix argument to
+force them to use a browser even when the topic is known.
+@end defopt
+
 @node How Forge Detection Works
 @appendix How Forge Detection Works
 
