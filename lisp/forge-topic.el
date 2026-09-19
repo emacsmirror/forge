@@ -931,7 +931,7 @@ as a string."
                  forge-topic-repository-slug-width
                  nil ?\s t)
                 " "))
-   (string-pad (forge--format-topic-slug topic) (or width 5))
+   (string-pad (forge--format-topic-slug topic) (or width 6))
    " "
    (forge--format-topic-title topic)))
 
@@ -1205,7 +1205,7 @@ of topics in a dedicated buffer."
 
 (defun forge--insert-topic (topic &optional width)
   (magit-insert-section ((eval (oref topic closql-table)) topic t)
-    (insert (forge--format-topic-line topic (or width 5)))
+    (insert (forge--format-topic-line topic width))
     (forge--insert-topic-marks topic t)
     (forge--insert-topic-labels topic t)
     (insert "\n")
