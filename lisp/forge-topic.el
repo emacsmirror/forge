@@ -921,6 +921,8 @@ as a string."
 
 (defun forge--format-topic-line (topic &optional width)
   (concat
+   (string-pad (forge--format-topic-slug topic) (or width 6))
+   " "
    (and (or (and (derived-mode-p 'forge-notifications-mode)
                  (eq forge-notifications-display-style 'flat))
             (and (derived-mode-p 'forge-topics-mode)
@@ -931,8 +933,6 @@ as a string."
                  forge-topic-repository-slug-width
                  nil ?\s t)
                 " "))
-   (string-pad (forge--format-topic-slug topic) (or width 6))
-   " "
    (forge--format-topic-title topic)))
 
 (defun forge--format-topic-slug (topic)
