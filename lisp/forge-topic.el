@@ -2122,26 +2122,22 @@ modify `bug-reference-bug-regexp' if appropriate."
               (derived-mode-p 'forge-topics-mode 'forge-notifications-mode))
     (magit--with-safe-default-directory nil
       (when-let ((repo (forge-get-repository :tracked?)))
-        (when (derived-mode-p 'magit-status-mode
-                              'forge-notifications-mode)
-          (setq-local
-           bug-reference-auto-setup-functions
-           (let ((hook bug-reference-auto-setup-functions))
-             (list (lambda ()
-                     ;; HOOK is not allowed to be a lexical var:
-                     ;; (run-hook-with-args-until-success 'hook)
-                     (catch 'success
-                       (dolist (f hook)
-                         (when (funcall f)
-                           (unless (string-prefix-p "." bug-reference-bug-regexp)
-                             (setq-local bug-reference-bug-regexp
-                                         (concat "." bug-reference-bug-regexp)))
-                           (throw 'success t)))))))))
         (if (derived-mode-p 'prog-mode)
             (bug-reference-prog-mode 1)
           (bug-reference-mode 1))
         (add-hook 'completion-at-point-functions
                   #'forge-topic-completion-at-point nil t)))))
+
+(define-advice bug-reference--run-auto-setup (:after () forge)
+  "Change regexp to ignore references at bol in certain Magit/Forge buffers.
+Such references can be visited using `forge-visit-this-topic' and should
+not be highlighted using the `link' face."
+  (when (and bug-reference-bug-regexp
+             (derived-mode-p 'magit-status-mode
+                             'forge-notifications-mode)
+             (not (string-prefix-p "." bug-reference-bug-regexp)))
+    (setq-local bug-reference-bug-regexp
+                (concat "." bug-reference-bug-regexp))))
 
 (unless noninteractive
   (dolist (hook forge-bug-reference-hooks)
