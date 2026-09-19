@@ -2133,8 +2133,9 @@ modify `bug-reference-bug-regexp' if appropriate."
                      (catch 'success
                        (dolist (f hook)
                          (when (funcall f)
-                           (setq bug-reference-bug-regexp
-                                 (concat "." bug-reference-bug-regexp))
+                           (unless (string-prefix-p "." bug-reference-bug-regexp)
+                             (setq-local bug-reference-bug-regexp
+                                         (concat "." bug-reference-bug-regexp)))
                            (throw 'success t)))))))))
         (if (derived-mode-p 'prog-mode)
             (bug-reference-prog-mode 1)
