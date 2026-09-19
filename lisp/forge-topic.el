@@ -92,15 +92,17 @@ beginning of the buffer."
   '(find-file-hook
     forge-post-mode-hook
     git-commit-setup-hook
-    magit-mode-hook)
+    magit-mode-hook
+    forge-notifications-mode-hook)
   "Hooks to which `forge-bug-reference-setup' is added.
 This variable has to be customized before `forge' is loaded."
-  :package-version '(forge . "0.2.0")
+  :package-version '(forge . "0.7.0")
   :group 'forge
   :options '(find-file-hook
              forge-post-mode-hook
              git-commit-setup-hook
-             magit-mode-hook)
+             magit-mode-hook
+             forge-notifications-mode-hook)
   :type '(list :convert-widget custom-hook-convert-widget))
 
 (defvar forge-format-avatar-function nil
@@ -2117,9 +2119,7 @@ modify `bug-reference-bug-regexp' if appropriate."
               (not (forge-db t))
               (and buffer-file-name
                    (not forge-bug-reference-remote-files)
-                   (file-remote-p buffer-file-name))
-              ;; TODO Allow use in these modes again.
-              (derived-mode-p 'forge-topics-mode 'forge-notifications-mode))
+                   (file-remote-p buffer-file-name)))
     (magit--with-safe-default-directory nil
       (when-let ((repo (forge-get-repository :tracked?)))
         (if (derived-mode-p 'prog-mode)
@@ -2134,6 +2134,7 @@ Such references can be visited using `forge-visit-this-topic' and should
 not be highlighted using the `link' face."
   (when (and bug-reference-bug-regexp
              (derived-mode-p 'magit-status-mode
+                             'forge-topics-mode
                              'forge-notifications-mode)
              (not (string-prefix-p "." bug-reference-bug-regexp)))
     (setq-local bug-reference-bug-regexp
