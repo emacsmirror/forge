@@ -352,6 +352,11 @@
 ;;;; Topics
 
 (cl-defmethod forge--pull-topic ((repo forge-github-repository)
+                                 (id string)
+                                 &optional callback)
+  (forge--pull-topic repo (forge-get-topic id) callback))
+
+(cl-defmethod forge--pull-topic ((repo forge-github-repository)
                                  (number number)
                                  &optional callback)
   (forge--query repo
