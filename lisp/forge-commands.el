@@ -365,11 +365,12 @@ commit, and for a file."
   "Visit the thing at point using a browser."
   (interactive)
   (if-let ((target (forge--browse-target)))
-      (if (stringp target)
-          (browse-url target)
-        (browse-url (forge-get-url target))
-        (when (cl-typep target 'forge-topic)
-          (forge-topic-mark-read target)))
+      (let ((forge-browse-topics-using-forge nil))
+        (if (stringp target)
+            (browse-url target)
+          (browse-url (forge-get-url target))
+          (when (cl-typep target 'forge-topic)
+            (forge-topic-mark-read target))))
     (user-error "Nothing to browse here")))
 
 (defun forge--browse-target ()
