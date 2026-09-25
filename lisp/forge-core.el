@@ -30,7 +30,6 @@
 (require 'eieio)
 (require 'llama)
 (require 'seq)
-(require 'subr-x)
 
 (require 'transient)
 
