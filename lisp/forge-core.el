@@ -29,7 +29,6 @@
 (require 'cond-let)
 (require 'eieio)
 (require 'llama)
-(require 'seq)
 
 (require 'transient)
 
